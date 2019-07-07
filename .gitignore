@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# ignore visual studio's code hidden folders
+.vscode/
