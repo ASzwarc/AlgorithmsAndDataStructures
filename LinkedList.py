@@ -14,6 +14,14 @@ class Node():
     def __str__(self):
         return f"{self._data}"
 
+    @property
+    def next(self):
+        return self._next
+
+    @next.setter
+    def next(self, data):
+        self._next = Node(data)
+
 
 class LinkedList():
     """
@@ -23,21 +31,21 @@ class LinkedList():
         self._head = None
 
     def __str__(self):
-        node = self.head
+        node = self._head
         output = []
         while node is not None:
             output.append(str(node))
-            node = node._next
+            node = node.next
         return " -> ".join(output)
 
-    def push(self, data):
+    def push(self, data: int):
         if self._head is None:
             self._head = Node(data)
         else:
             node = self._head
-            while node._next is not None:
-                node = node._next
-            node._next = Node(data)
+            while node.next is not None:
+                node = node.next
+            node.next = data
 
 
 if __name__ == '__main__':
