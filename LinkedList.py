@@ -38,7 +38,7 @@ class LinkedList():
             node = node.next
         return " -> ".join(output)
 
-    def push(self, data: int):
+    def push_back(self, data: int):
         if self._head is None:
             self._head = Node(data)
         else:
@@ -47,10 +47,27 @@ class LinkedList():
                 node = node.next
             node.next = data
 
+    def push_front(self, data: int):
+        pass
+
+    def pop_front(self) -> int:
+        pass
+
+    def pop_back(self) -> int:
+        pass
+
+    def insert(self, pos: int):
+        pass
+
+    def remove(self, value: int):
+        pass
+
+    def remove_if(self, functor):
+        pass
 
 if __name__ == '__main__':
     linked_list = LinkedList()
-    linked_list.push(1)
-    linked_list.push(2)
-    linked_list.push(3)
+    linked_list.push_back(1)
+    linked_list.push_back(2)
+    linked_list.push_back(3)
     print(linked_list)
