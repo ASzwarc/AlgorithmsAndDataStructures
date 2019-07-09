@@ -47,22 +47,43 @@ class LinkedList():
         return " -> ".join(output)
 
     def push_back(self, data: int):
-        if self._head is None:
+        node = self._head
+        if node is None:
             self._head = Node(data)
         else:
-            node = self._head
             while node.next is not None:
                 node = node.next
-            node.next = data
+            node.next = Node(data)
 
     def push_front(self, data: int):
-        pass
+        new_node = Node(data)
+        new_node.next = self._head
+        self._head = new_node
 
     def pop_front(self) -> int:
-        pass
+        if self.empty():
+            return None
+        current_node = self._head
+        ret_val = current_node.data
+        if current_node.next is None:
+            current_node = None
+        else:
+            self._head = current_node.next
+        return ret_val
 
     def pop_back(self) -> int:
-        pass
+        if self.empty():
+            return None
+        current_node = self._head
+        if current_node.next is None:
+            ret_val = current_node.data
+            current_node = None
+        else:
+            while current_node.next.next is not None:
+                current_node = current_node.next
+            ret_val = current_node.next.data
+            current_node.next = None
+        return ret_val
 
     def insert(self, pos: int):
         pass
@@ -73,9 +94,18 @@ class LinkedList():
     def remove_if(self, functor):
         pass
 
+    def empty(self) -> int:
+        return self._head is None
+
 if __name__ == '__main__':
     linked_list = LinkedList()
     linked_list.push_back(1)
     linked_list.push_back(2)
     linked_list.push_back(3)
+    linked_list.push_front(0)
     print(linked_list)
+    print(linked_list.pop_back())
+    print(linked_list)
+    print(linked_list.pop_front())
+    print(linked_list)
+    print(linked_list.empty())
