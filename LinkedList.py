@@ -19,8 +19,16 @@ class Node():
         return self._next
 
     @next.setter
-    def next(self, data):
-        self._next = Node(data)
+    def next(self, node):
+        self._next = node
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, value: int):
+        self._data = value
 
 
 class LinkedList():
