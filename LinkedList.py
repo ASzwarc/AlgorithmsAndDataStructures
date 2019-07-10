@@ -7,7 +7,7 @@ class Node():
     """
     Linked list's node
     """
-    def __init__(self, data: int):
+    def __init__(self, data):
         self._data = data
         self._next = None
 
@@ -27,7 +27,7 @@ class Node():
         return self._data
 
     @data.setter
-    def data(self, value: int):
+    def data(self, value):
         self._data = value
 
 
@@ -46,7 +46,7 @@ class LinkedList():
             node = node.next
         return " -> ".join(output)
 
-    def push_back(self, data: int):
+    def push_back(self, data):
         node = self._head
         if node is None:
             self._head = Node(data)
@@ -55,12 +55,12 @@ class LinkedList():
                 node = node.next
             node.next = Node(data)
 
-    def push_front(self, data: int):
+    def push_front(self, data):
         new_node = Node(data)
         new_node.next = self._head
         self._head = new_node
 
-    def pop_front(self) -> int:
+    def pop_front(self):
         if self.empty():
             return None
         current_node = self._head
@@ -71,7 +71,7 @@ class LinkedList():
             self._head = current_node.next
         return ret_val
 
-    def pop_back(self) -> int:
+    def pop_back(self):
         if self.empty():
             return None
         current_node = self._head
@@ -85,16 +85,16 @@ class LinkedList():
             current_node.next = None
         return ret_val
 
-    def insert(self, pos: int):
+    def insert(self, pos):
         pass
 
-    def remove(self, value: int):
+    def remove(self, value):
         pass
 
     def remove_if(self, functor):
         pass
 
-    def empty(self) -> int:
+    def empty(self):
         return self._head is None
 
 if __name__ == '__main__':
