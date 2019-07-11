@@ -85,11 +85,48 @@ class LinkedList():
             current_node.next = None
         return ret_val
 
-    def insert(self, pos):
-        pass
+    def insert(self, pos, data) -> bool:
+        if self.empty():
+            return False
+        else:
+            current_node = self._head
+            while (current_node.next is not None and current_node.data != pos):
+                current_node = current_node.next
+            if current_node.data == pos:
+                new_node = Node(data)
+                new_node.next = current_node.next
+                current_node.next = new_node
+                return True
+            else:  # reached end of list and there is no element 'pos'
+                return False
 
-    def remove(self, value):
-        pass
+    def remove(self, pos) -> bool:
+        def evaluate_last_element(current_node):
+            if current_node.data != pos:
+                return False
+            else:
+                self.pop_back()
+                return True
+
+        if self.empty():
+            return False
+        else:
+            current_node = self._head
+            if current_node.data == pos:
+                self.pop_front()
+                return True
+            if current_node.next is None:
+                return evaluate_last_element(current_node)
+            else:
+                while (current_node.next.next is not None and
+                       current_node.next.data != pos):
+                    current_node = current_node.next
+                if current_node.next.data == pos:
+                    new_end = current_node.next.next
+                    current_node.next = new_end
+                    return True
+                else:
+                    return evaluate_last_element(current_node.next)
 
     def remove_if(self, functor):
         pass
@@ -103,9 +140,23 @@ if __name__ == '__main__':
     linked_list.push_back(2)
     linked_list.push_back(3)
     linked_list.push_front(0)
+    linked_list.insert(2, 5)
     print(linked_list)
     print(linked_list.pop_back())
     print(linked_list)
     print(linked_list.pop_front())
     print(linked_list)
     print(linked_list.empty())
+    print(linked_list.insert(6, 10))
+    linked_list.push_back(6)
+    linked_list.push_back(7)
+    linked_list.push_back(8)
+    print(linked_list)
+    print(linked_list.remove(8))
+    print(linked_list)
+    print(linked_list.remove(5))
+    print(linked_list)
+    print(linked_list.remove(6))
+    print(linked_list)
+    print(linked_list.remove(1))
+    print(linked_list)
