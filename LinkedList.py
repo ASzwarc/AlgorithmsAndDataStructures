@@ -129,7 +129,13 @@ class LinkedList():
                     return evaluate_last_element(current_node.next)
 
     def remove_if(self, functor):
-        pass
+        new_list = LinkedList()
+        current_node = self._head
+        while current_node is not None:
+            if not functor(current_node.data):
+                new_list.push_back(Node(current_node.data))
+            current_node = current_node.next
+        self._head = new_list._head
 
     def empty(self):
         return self._head is None
@@ -159,4 +165,11 @@ if __name__ == '__main__':
     print(linked_list.remove(6))
     print(linked_list)
     print(linked_list.remove(1))
+    print(linked_list)
+    linked_list.push_back(1)
+    linked_list.push_back(2)
+    linked_list.push_back(3)
+    linked_list.push_front(0)
+    print(linked_list)
+    linked_list.remove_if(lambda x: x % 2 == 1)
     print(linked_list)
