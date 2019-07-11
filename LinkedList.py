@@ -76,10 +76,10 @@ class LinkedList():
             ret_val = current_node.data
             current_node = None
         else:
-            while current_node.next is not None:
+            while current_node.next.next is not None:
                 current_node = current_node.next
-            ret_val = current_node.data
-            current_node = None
+            ret_val = current_node.next.data
+            current_node.next = None
         return ret_val
 
     def insert(self, pos, data) -> bool:
