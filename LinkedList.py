@@ -65,10 +65,7 @@ class LinkedList():
             return None
         current_node = self._head
         ret_val = current_node.data
-        if current_node.next is None:
-            current_node = None
-        else:
-            self._head = current_node.next
+        self._head = current_node.next
         return ret_val
 
     def pop_back(self):
@@ -79,10 +76,10 @@ class LinkedList():
             ret_val = current_node.data
             current_node = None
         else:
-            while current_node.next.next is not None:
+            while current_node.next is not None:
                 current_node = current_node.next
-            ret_val = current_node.next.data
-            current_node.next = None
+            ret_val = current_node.data
+            current_node = None
         return ret_val
 
     def insert(self, pos, data) -> bool:
@@ -172,4 +169,9 @@ if __name__ == '__main__':
     linked_list.push_front(0)
     print(linked_list)
     linked_list.remove_if(lambda x: x % 2 == 1)
+    print(linked_list)
+    linked_list.pop_back()
+    linked_list.pop_back()
+    print(linked_list)
+    print(linked_list.pop_front())
     print(linked_list)
