@@ -47,11 +47,24 @@ class DoublyLinkedList():
         while current_node is not None:
             output.append(str(current_node))
             current_node = current_node._next
-        return " -> ".join(output)
+        return " <-> ".join(output)
 
     def empty(self):
         return self._head is None
 
+    def push_back(self, node):
+        if self.empty():
+            self._head = Node(node)
+        else:
+            current_node = self._head
+            while current_node.next is not None:
+                current_node = current_node.next
+            new_node = Node(node)
+            current_node.next = new_node
+            new_node.prev = current_node
+
 if __name__ == '__main__':
     double_list = DoublyLinkedList()
+    double_list.push_back(0)
+    double_list.push_back(1)
     print(double_list)
