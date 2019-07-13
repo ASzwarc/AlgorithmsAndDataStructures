@@ -73,6 +73,30 @@ class DoublyLinkedList():
             current_node.prev = new_node
             self._head = new_node
 
+    def pop_back(self):
+        if self.empty():
+            return None
+        else:
+            current_node = self._head
+            while current_node.next is not None:
+                current_node = current_node.next
+            ret_val = current_node.data
+            current_node.prev.next = None
+            return ret_val
+
+    def pop_front(self):
+        if self.empty():
+            return None
+        else:
+            current_node = self._head
+            ret_val = current_node.data
+            if current_node.next is None:
+                self._head = None
+            else:
+                self._head = current_node.next
+                current_node.next.prev = None
+            return ret_val
+
 if __name__ == '__main__':
     double_list = DoublyLinkedList()
     double_list.push_front(-10)
@@ -81,4 +105,8 @@ if __name__ == '__main__':
     print(double_list)
     double_list.push_front(-1)
     double_list.push_front(-2)
+    print(double_list)
+    print(double_list.pop_back())
+    print(double_list)
+    print(double_list.pop_front())
     print(double_list)
