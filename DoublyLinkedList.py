@@ -97,6 +97,28 @@ class DoublyLinkedList():
                 current_node.next.prev = None
             return ret_val
 
+    def insert(self, pos, node) -> bool:
+        if self.empty():
+            return False
+        else:
+            current_node = self._head
+            while current_node.next is not None and current_node.data != pos:
+                current_node = current_node.next
+            if current_node.next is None and current_node.data == pos:
+                new_node = Node(node)
+                current_node.next = new_node
+                new_node.prev = current_node
+                return True
+            elif current_node.next is not None:
+                new_node = Node(node)
+                current_node.next.prev = new_node
+                new_node.next = current_node.next
+                new_node.prev = current_node
+                current_node.next = new_node
+                return True
+            else:
+                return False
+
 if __name__ == '__main__':
     double_list = DoublyLinkedList()
     double_list.push_front(-10)
@@ -109,4 +131,10 @@ if __name__ == '__main__':
     print(double_list.pop_back())
     print(double_list)
     print(double_list.pop_front())
+    print(double_list)
+    double_list.insert(-10, -9)
+    print(double_list)
+    double_list.insert(0, 1)
+    print(double_list)
+    double_list.insert(2, 3)
     print(double_list)
