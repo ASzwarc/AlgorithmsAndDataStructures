@@ -63,8 +63,22 @@ class DoublyLinkedList():
             current_node.next = new_node
             new_node.prev = current_node
 
+    def push_front(self, node):
+        if self.empty():
+            self._head = Node(node)
+        else:
+            current_node = self._head
+            new_node = Node(node)
+            new_node.next = current_node
+            current_node.prev = new_node
+            self._head = new_node
+
 if __name__ == '__main__':
     double_list = DoublyLinkedList()
+    double_list.push_front(-10)
     double_list.push_back(0)
     double_list.push_back(1)
+    print(double_list)
+    double_list.push_front(-1)
+    double_list.push_front(-2)
     print(double_list)
