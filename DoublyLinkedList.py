@@ -171,6 +171,22 @@ class DoublyLinkedList():
                 else:
                     current_node = current_node.next
 
+    def __iter__(self):
+        return DoublyLinkedListIterator(self._head)
+
+
+class DoublyLinkedListIterator():
+    def __init__(self, head):
+        self._current = head
+
+    def __next__(self):
+        if self._current is None:
+            raise StopIteration
+        else:
+            current_node = self._current
+            self._current = self._current.next
+            return current_node
+
 if __name__ == '__main__':
     double_list = DoublyLinkedList()
     double_list.push_front(-10)
@@ -205,3 +221,6 @@ if __name__ == '__main__':
     double_list.remove_if(lambda x: x < 0)
     print(double_list)
     print(len(double_list))
+
+    for node in double_list:
+        print(node)
