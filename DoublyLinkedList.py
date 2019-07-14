@@ -49,6 +49,14 @@ class DoublyLinkedList():
             current_node = current_node._next
         return " <-> ".join(output)
 
+    def __len__(self):
+        current_node = self._head
+        size = 0
+        while current_node is not None:
+            size += 1
+            current_node = current_node.next
+        return size
+
     def empty(self):
         return self._head is None
 
@@ -141,6 +149,28 @@ class DoublyLinkedList():
             else:
                 return False
 
+    def remove_if(self, functor):
+        if self.empty():
+            return
+        else:
+            current_node = self._head
+            while current_node is not None:
+                if functor(current_node.data):
+                    new_current = current_node.next
+                    if current_node.prev is None:
+                        self._head = new_current
+                        new_current.prev = None
+                    elif current_node.next is None:
+                        current_node.prev.next = new_current
+                    else:
+                        current_node.prev.next = current_node.next
+                        current_node.next.prev = current_node.prev
+                    current_node.next = None
+                    current_node.prev = None
+                    current_node = new_current
+                else:
+                    current_node = current_node.next
+
 if __name__ == '__main__':
     double_list = DoublyLinkedList()
     double_list.push_front(-10)
@@ -166,3 +196,12 @@ if __name__ == '__main__':
     print(double_list)
     double_list.remove(1)
     print(double_list)
+    double_list.push_front(-20)
+    double_list.push_back(0)
+    double_list.push_back(1)
+    double_list.push_back(-15)
+    double_list.insert(0, -2)
+    print(double_list)
+    double_list.remove_if(lambda x: x < 0)
+    print(double_list)
+    print(len(double_list))
