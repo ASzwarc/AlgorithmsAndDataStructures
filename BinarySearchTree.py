@@ -28,6 +28,14 @@ class Node():
             else:
                 self._right.insert(data)
 
+    def inorder_traversal(self, root):
+        result = []
+        if root:
+            result = self.inorder_traversal(root.left)
+            result.append(str(root))
+            result = result + self.inorder_traversal(root.right)
+        return result
+
     @property
     def data(self):
         return self._data
@@ -67,8 +75,13 @@ class BinarySearchTree():
         else:
             return self._root.insert(data)
 
+    def print_inorder(self):
+        if not self.empty():
+            print(" ".join(self._root.inorder_traversal(self._root)))
+
 if __name__ == '__main__':
     bst = BinarySearchTree()
     print(bst.insert(20))
     print(bst.insert(10))
     print(bst.insert(30))
+    bst.print_inorder()
