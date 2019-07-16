@@ -41,17 +41,17 @@ class LinkedList():
     def __str__(self):
         node = self._head
         output = []
-        while node is not None:
+        while node:
             output.append(str(node))
             node = node.next
         return " -> ".join(output)
 
     def push_back(self, data):
         node = self._head
-        if node is None:
+        if not node:
             self._head = Node(data)
         else:
-            while node.next is not None:
+            while node.next:
                 node = node.next
             node.next = Node(data)
 
@@ -72,11 +72,11 @@ class LinkedList():
         if self.empty():
             return None
         current_node = self._head
-        if current_node.next is None:
+        if not current_node.next:
             ret_val = current_node.data
             current_node = None
         else:
-            while current_node.next.next is not None:
+            while current_node.next.next:
                 current_node = current_node.next
             ret_val = current_node.next.data
             current_node.next = None
@@ -87,7 +87,7 @@ class LinkedList():
             return False
         else:
             current_node = self._head
-            while (current_node.next is not None and current_node.data != pos):
+            while (current_node.next and current_node.data != pos):
                 current_node = current_node.next
             if current_node.data == pos:
                 new_node = Node(data)
@@ -112,10 +112,10 @@ class LinkedList():
             if current_node.data == pos:
                 self.pop_front()
                 return True
-            if current_node.next is None:
+            if not current_node.next:
                 return evaluate_last_element(current_node)
             else:
-                while (current_node.next.next is not None and
+                while (current_node.next.next and
                        current_node.next.data != pos):
                     current_node = current_node.next
                 if current_node.next.data == pos:
@@ -128,7 +128,7 @@ class LinkedList():
     def remove_if(self, functor):
         new_list = LinkedList()
         current_node = self._head
-        while current_node is not None:
+        while current_node:
             if not functor(current_node.data):
                 new_list.push_back(Node(current_node.data))
             current_node = current_node.next
