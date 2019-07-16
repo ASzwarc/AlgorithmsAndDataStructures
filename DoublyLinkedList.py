@@ -44,7 +44,7 @@ class DoublyLinkedList():
     def __str__(self):
         current_node = self._head
         output = []
-        while current_node is not None:
+        while current_node:
             output.append(str(current_node))
             current_node = current_node._next
         return " <-> ".join(output)
@@ -52,7 +52,7 @@ class DoublyLinkedList():
     def __len__(self):
         current_node = self._head
         size = 0
-        while current_node is not None:
+        while current_node:
             size += 1
             current_node = current_node.next
         return size
@@ -65,7 +65,7 @@ class DoublyLinkedList():
             self._head = Node(node)
         else:
             current_node = self._head
-            while current_node.next is not None:
+            while current_node.next:
                 current_node = current_node.next
             new_node = Node(node)
             current_node.next = new_node
@@ -86,7 +86,7 @@ class DoublyLinkedList():
             return None
         else:
             current_node = self._head
-            while current_node.next is not None:
+            while current_node.next:
                 current_node = current_node.next
             ret_val = current_node.data
             current_node.prev.next = None
@@ -98,7 +98,7 @@ class DoublyLinkedList():
         else:
             current_node = self._head
             ret_val = current_node.data
-            if current_node.next is None:
+            if not current_node.next:
                 self._head = None
             else:
                 self._head = current_node.next
@@ -110,14 +110,14 @@ class DoublyLinkedList():
             return False
         else:
             current_node = self._head
-            while current_node.next is not None and current_node.data != pos:
+            while current_node.next and current_node.data != pos:
                 current_node = current_node.next
-            if current_node.next is None and current_node.data == pos:
+            if current_node.next and current_node.data == pos:
                 new_node = Node(node)
                 current_node.next = new_node
                 new_node.prev = current_node
                 return True
-            elif current_node.next is not None:
+            elif current_node.next:
                 new_node = Node(node)
                 current_node.next.prev = new_node
                 new_node.next = current_node.next
@@ -132,13 +132,13 @@ class DoublyLinkedList():
             return False
         else:
             current_node = self._head
-            while current_node.next is not None and current_node.data != node:
+            while current_node.next and current_node.data != node:
                 current_node = current_node.next
-            if current_node.next is None and current_node.data == node:
+            if not current_node.next and current_node.data == node:
                 current_node.prev.next = None
                 return True
-            elif current_node.next is not None:
-                if current_node.prev is None:
+            elif current_node.next:
+                if not current_node.prev:
                     self._head = current_node.next
                     current_node.next.prev = None
                     return True
@@ -154,13 +154,13 @@ class DoublyLinkedList():
             return
         else:
             current_node = self._head
-            while current_node is not None:
+            while current_node:
                 if functor(current_node.data):
                     new_current = current_node.next
-                    if current_node.prev is None:
+                    if not current_node.prev:
                         self._head = new_current
                         new_current.prev = None
-                    elif current_node.next is None:
+                    elif not current_node.next:
                         current_node.prev.next = new_current
                     else:
                         current_node.prev.next = current_node.next
@@ -180,7 +180,7 @@ class DoublyLinkedListIterator():
         self._current = head
 
     def __next__(self):
-        if self._current is None:
+        if not self._current:
             raise StopIteration
         else:
             current_node = self._current
