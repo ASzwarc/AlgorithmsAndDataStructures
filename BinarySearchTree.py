@@ -16,13 +16,13 @@ class Node():
         if data == self._data:
             return False
         elif data < self._data:
-            if self._left is None:
+            if not self._left:
                 self._left = Node(data)
                 return True
             else:
                 self._left.insert(data)
         else:  # data > self._data
-            if self._right is None:
+            if not self._right:
                 self._right = Node(data)
                 return True
             else:
@@ -34,6 +34,20 @@ class Node():
             result = self.inorder_traversal(root.left)
             result.append(str(root))
             result = result + self.inorder_traversal(root.right)
+        return result
+
+    def inorder_traversal_non_recursive(self, root):
+        node_stack = []
+        result = []
+        current_node = root
+        while current_node or len(node_stack) != 0:
+            while current_node:
+                node_stack.append(current_node)
+                current_node = current_node.left
+
+            current_node = node_stack.pop()
+            result.append(str(current_node))
+            current_node = current_node.right
         return result
 
     @property
@@ -79,9 +93,13 @@ class BinarySearchTree():
         if not self.empty():
             print(" ".join(self._root.inorder_traversal(self._root)))
 
+    def print_inorder_non_recursive(self):
+        print(" ".join(self._root.inorder_traversal_non_recursive(self._root)))
+
 if __name__ == '__main__':
     bst = BinarySearchTree()
     print(bst.insert(20))
     print(bst.insert(10))
     print(bst.insert(30))
     bst.print_inorder()
+    bst.print_inorder_non_recursive()
