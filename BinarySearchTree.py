@@ -28,6 +28,20 @@ class Node():
             else:
                 self._right.insert(data)
 
+    def find(self, value) -> bool:
+        if value == self._data:
+            return True
+        elif value < self._data:
+            if not self._left:
+                return False
+            else:
+                return self._left.find(value)
+        else:  # value > self._data
+            if not self._right:
+                return False
+            else:
+                return self._right.find(value)
+
     def inorder_traversal(self, root):
         result = []
         if root:
@@ -79,6 +93,12 @@ class BinarySearchTree():
     def __init__(self):
         self._root = None
 
+    def __contains__(self, value) -> bool:
+        if self.empty():
+            return False
+        else:
+            return self._root.find(value)
+
     def empty(self):
         return self._root is None
 
@@ -126,3 +146,4 @@ if __name__ == '__main__':
     bst.print_inorder_non_recursive()
     print(bst.min())
     print(bst.max())
+    print(-5 in bst)
