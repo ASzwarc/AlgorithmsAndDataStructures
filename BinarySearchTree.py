@@ -89,6 +89,24 @@ class BinarySearchTree():
         else:
             return self._root.insert(data)
 
+    def min(self):
+        if self.empty():
+            return None
+        else:
+            current_node = self._root
+            while current_node.left:
+                current_node = current_node.left
+            return current_node.data
+
+    def max(self):
+        if self.empty():
+            return None
+        else:
+            current_node = self._root
+            while current_node.right:
+                current_node = current_node.right
+            return current_node.data
+
     def print_inorder(self):
         if not self.empty():
             print(" ".join(self._root.inorder_traversal(self._root)))
@@ -101,5 +119,10 @@ if __name__ == '__main__':
     print(bst.insert(20))
     print(bst.insert(10))
     print(bst.insert(30))
+    print(bst.insert(-5))
+    print(bst.insert(40))
+    print(bst.insert(24))
     bst.print_inorder()
     bst.print_inorder_non_recursive()
+    print(bst.min())
+    print(bst.max())
