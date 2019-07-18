@@ -28,6 +28,18 @@ class Node():
             else:
                 self._right.insert(data)
 
+    def max(self) -> Node:
+        current_node = self
+        while current_node._right:
+            current_node = current_node._right
+        return current_node
+
+    def min(self) -> Node:
+        current_node = self
+        while current_node._left:
+            current_node = current_node._left
+        return current_node
+
     def find(self, value) -> bool:
         if value == self._data:
             return True
