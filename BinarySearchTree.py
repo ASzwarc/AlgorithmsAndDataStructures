@@ -8,6 +8,7 @@ class Node():
         self._data = data
         self._left = None
         self._right = None
+        self._parent = None
 
     def __str__(self):
         return f"{self._data}"
@@ -17,13 +18,17 @@ class Node():
             return False
         elif data < self._data:
             if not self._left:
-                self._left = Node(data)
+                new_node = Node(data)
+                new_node._parent = self
+                self._left = new_node
                 return True
             else:
                 self._left.insert(data)
         else:  # data > self._data
             if not self._right:
-                self._right = Node(data)
+                new_node = Node(data)
+                new_node._parent = self
+                self._right = new_node
                 return True
             else:
                 self._right.insert(data)
