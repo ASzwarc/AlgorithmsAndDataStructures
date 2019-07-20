@@ -1,6 +1,8 @@
 """
 Implementation of binary search tree
 """
+from __future__ import annotations
+from typing import Tuple
 
 
 class Node():
@@ -33,17 +35,17 @@ class Node():
             else:
                 self._right.insert(data)
 
-    def max(self) -> Node:
+    def max(self) -> Tuple[Node, Node]:
         current_node = self
         while current_node._right:
             current_node = current_node._right
-        return current_node
+        return (current_node, current_node._parent)
 
-    def min(self) -> Node:
+    def min(self) -> Tuple[Node, Node]:
         current_node = self
         while current_node._left:
             current_node = current_node._left
-        return current_node
+        return (current_node, current_node._parent)
 
     def find(self, value) -> bool:
         if value == self._data:
