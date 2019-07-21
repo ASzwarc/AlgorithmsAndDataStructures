@@ -47,17 +47,17 @@ class Node():
             current_node = current_node._left
         return (current_node, current_node._parent)
 
-    def find(self, value) -> bool:
+    def find(self, value) -> Node:
         if value == self._data:
-            return True
+            return self
         elif value < self._data:
             if not self._left:
-                return False
+                return None
             else:
                 return self._left.find(value)
         else:  # value > self._data
             if not self._right:
-                return False
+                return None
             else:
                 return self._right.find(value)
 
@@ -116,7 +116,8 @@ class BinarySearchTree():
         if self.empty():
             return False
         else:
-            return self._root.find(value)
+            node = self._root.find(value)
+            return node is not None
 
     def empty(self):
         return self._root is None
@@ -127,6 +128,13 @@ class BinarySearchTree():
             return True
         else:
             return self._root.insert(data)
+
+    def find(self, key) -> bool:
+        if self.empty():
+            return False
+        else:
+            node = self._root.find(key)
+            return node is not None
 
     def min(self):
         if self.empty():
@@ -139,6 +147,12 @@ class BinarySearchTree():
             return None
         else:
             return self._root.max()[0]
+
+    def delete(self, key) -> bool:
+        if self.empty():
+            return False
+        else:
+            return self._root.delete(key)
 
     def print_inorder(self):
         if not self.empty():
@@ -160,3 +174,4 @@ if __name__ == '__main__':
     print(bst.min())
     print(bst.max())
     print(-5 in bst)
+    print(100 in bst)
