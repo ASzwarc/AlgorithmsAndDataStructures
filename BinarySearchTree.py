@@ -61,6 +61,34 @@ class Node():
             else:
                 return self._right.find(value)
 
+    def delete(self, key) -> bool:
+        # find key to be deleted
+        # check how many children does it have
+        # 0 - just delete
+        # 1 - link child to node's parent
+        # 2 - relabel the node with it's successor
+        # (left child of right child and remove node)
+        node = self.find(key)
+        if node:
+            if node.left and node.right:  # 2 children
+                pass
+            elif node.left and not node.right:  # 1 child
+                pass
+            elif node.right and not node.left:  # 1 child
+                pass
+            else:  # no children
+                temp_parent = node.parent
+                if temp_parent.right is node:
+                    temp_parent.right = None
+                elif temp_parent.left is node:
+                    temp_parent.left = None
+                else:  # this shouldn't happen
+                    pass
+                node.parent = None
+                return True
+        else:
+            return False
+
     def inorder_traversal(self, root):
         result = []
         if root:
@@ -175,3 +203,5 @@ if __name__ == '__main__':
     print(bst.max())
     print(-5 in bst)
     print(100 in bst)
+    print(bst.delete(-5))
+    bst.print_inorder()
