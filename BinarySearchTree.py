@@ -135,6 +135,14 @@ class Node():
     def right(self, right_node):
         self._right = right_node
 
+    @property
+    def parent(self):
+        return self._parent
+
+    @parent.setter
+    def parent(self, node):
+        self._parent = node
+
 
 class BinarySearchTree():
     def __init__(self):
