@@ -132,19 +132,13 @@ class BinarySearchTree():
         if self.empty():
             return None
         else:
-            current_node = self._root
-            while current_node.left:
-                current_node = current_node.left
-            return current_node.data
+            return self._root.min()[0]
 
     def max(self):
         if self.empty():
             return None
         else:
-            current_node = self._root
-            while current_node.right:
-                current_node = current_node.right
-            return current_node.data
+            return self._root.max()[0]
 
     def print_inorder(self):
         if not self.empty():
