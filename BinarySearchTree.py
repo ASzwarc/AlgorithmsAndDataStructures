@@ -25,7 +25,7 @@ class Node():
                 self._left = new_node
                 return True
             else:
-                self._left.insert(data)
+                return self._left.insert(data)
         else:  # data > self._data
             if not self._right:
                 new_node = Node(data)
@@ -33,7 +33,7 @@ class Node():
                 self._right = new_node
                 return True
             else:
-                self._right.insert(data)
+                return self._right.insert(data)
 
     def max(self) -> Tuple[Node, Node]:
         current_node = self
@@ -62,20 +62,32 @@ class Node():
                 return self._right.find(value)
 
     def delete(self, key) -> bool:
-        # find key to be deleted
-        # check how many children does it have
-        # 0 - just delete
-        # 1 - link child to node's parent
-        # 2 - relabel the node with it's successor
-        # (left child of right child and remove node)
         node = self.find(key)
         if node:
             if node.left and node.right:  # 2 children
-                pass
+                successor = node.right.min()[0]
+                successor_data = successor.data
+                node.delete(successor_data)
+                node.data = successor_data
+                return True
             elif node.left and not node.right:  # 1 child
-                pass
+                if node.parent.data < node.data:  # node is right child
+                    node.parent.right = node.left
+                else:  # node is left child
+                    node.parent.left = node.left
+                node.left.parent = node.parent
+                node.parent = None
+                node.left = None
+                return True
             elif node.right and not node.left:  # 1 child
-                pass
+                if node.parent.data < node.data:  # node is right child
+                    node.parent.right = node.right
+                else:  # node is left child
+                    node.parent.left = node.right
+                node.right.parent = node.parent
+                node.parent = None
+                node.right = None
+                return True
             else:  # no children
                 temp_parent = node.parent
                 if temp_parent.right is node:
@@ -212,4 +224,23 @@ if __name__ == '__main__':
     print(-5 in bst)
     print(100 in bst)
     print(bst.delete(-5))
+    bst.print_inorder()
+    print(bst.insert(-5))
+    print(bst.insert(-6))
+    bst.print_inorder()
+    print(bst.delete(10))
+    bst.print_inorder()
+    print(bst.insert(45))
+    bst.print_inorder()
+    print(bst.delete(40))
+    bst.print_inorder()
+    print(bst.delete(30))
+    bst.print_inorder()
+    print(bst.insert(44))
+    print(bst.insert(43))
+    print(bst.insert(47))
+    print(bst.insert(46))
+    print(bst.insert(48))
+    bst.print_inorder()
+    print(bst.delete(45))
     bst.print_inorder()
