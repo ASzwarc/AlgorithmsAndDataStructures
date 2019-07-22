@@ -35,17 +35,17 @@ class Node():
             else:
                 return self._right.insert(data)
 
-    def max(self) -> Tuple[Node, Node]:
+    def max(self) -> Node:
         current_node = self
         while current_node._right:
             current_node = current_node._right
-        return (current_node, current_node._parent)
+        return current_node
 
-    def min(self) -> Tuple[Node, Node]:
+    def min(self) -> Node:
         current_node = self
         while current_node._left:
             current_node = current_node._left
-        return (current_node, current_node._parent)
+        return current_node
 
     def find(self, value) -> Node:
         if value == self._data:
@@ -65,7 +65,7 @@ class Node():
         node = self.find(key)
         if node:
             if node.left and node.right:  # 2 children
-                successor = node.right.min()[0]
+                successor = node.right.min()
                 successor_data = successor.data
                 node.delete(successor_data)
                 node.data = successor_data
@@ -188,13 +188,13 @@ class BinarySearchTree():
         if self.empty():
             return None
         else:
-            return self._root.min()[0]
+            return self._root.min()
 
     def max(self):
         if self.empty():
             return None
         else:
-            return self._root.max()[0]
+            return self._root.max()
 
     def delete(self, key) -> bool:
         if self.empty():
