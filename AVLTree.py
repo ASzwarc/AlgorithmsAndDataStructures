@@ -2,6 +2,7 @@
 Implementation of AVL tree
 """
 
+
 class Node:
     def __init__(self, key):
         self._key = key
@@ -27,6 +28,23 @@ class Node:
     @height.setter
     def height(self, value):
         self._height = value
+
+    @property
+    def left(self):
+        return self._left
+
+    @left.setter
+    def left(self, node):
+        self._left = node
+
+    @property
+    def right(self):
+        return self._right
+
+    @right.setter
+    def right(self, node):
+        self._right = node
+
 
 class AVL:
     def __init__(self):
