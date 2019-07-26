@@ -45,6 +45,41 @@ class Node:
     def right(self, node):
         self._right = node
 
+    def left_rotation(self):
+        pass
+
+    def right_rotation(self):
+        pass
+
+    def left_right_rotation(self):
+        pass
+
+    def right_left_rotation(self):
+        pass
+
+    def insert(self, key):
+        if self.key == key:
+            return False
+        elif key < self.key:
+            if not self.left:
+                new_node = Node(key)
+                new_node.height = self.height + 1
+                self.left = new_node
+                # evaluate rotation
+                return True
+            else:
+                return self.left.insert(key)
+        else:  # key > self.key
+            if not self.right:
+                new_node = Node(key)
+                new_node.height = self.height + 1
+                self.right = new_node
+                # evaluate rotation
+                return True
+            else:
+                return self.right.insert(key)
+        return False
+
 
 class AVL:
     def __init__(self):
