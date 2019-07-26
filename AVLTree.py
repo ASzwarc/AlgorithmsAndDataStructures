@@ -80,10 +80,39 @@ class Node:
                 return self.right.insert(key)
         return False
 
+    def print_inorder(self):
+        output = []
+        if self.left:
+            output = self.left.print_inorder()
+        output.append(str(self))
+        if self.right:
+            output = output + self.right.print_inorder()
+        return output
+
 
 class AVL:
     def __init__(self):
         self._root = None
 
+    def insert(self, key):
+        if not self._root:
+            self._root = Node(key)
+            return True
+        else:
+            return self._root.insert(key)
+
+    def insert_list(self, iterable):
+        for item in iterable:
+            self.insert(item)
+
+    def print_inorder(self):
+        if self._root:
+            output = self._root.print_inorder()
+            print(" ".join(output))
+        else:
+            print("Tree is empty!!!")
+
 if __name__ == '__main__':
-    pass
+    avl = AVL()
+    avl.insert_list([3, 5, 6, 7, 8, -1])
+    avl.print_inorder()
