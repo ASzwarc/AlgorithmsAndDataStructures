@@ -8,6 +8,7 @@ class Node:
         self._key = key
         self._left = None
         self._right = None
+        self._parent = None
         self._height = 0
 
     def __str__(self):
@@ -57,24 +58,31 @@ class Node:
     def right_left_rotation(self):
         pass
 
+    def recalculate_height_up(self):
+        node = self._parent
+        while node:
+            node.height = max([child.height if child else -1 for child in
+                               [node.left, node.right]]) + 1
+            node = node._parent
+
     def insert(self, key):
         if self.key == key:
             return False
         elif key < self.key:
             if not self.left:
                 new_node = Node(key)
-                new_node.height = self.height + 1
+                new_node._parent = self
                 self.left = new_node
-                # evaluate rotation
+                new_node.recalculate_height_up()
                 return True
             else:
                 return self.left.insert(key)
         else:  # key > self.key
             if not self.right:
                 new_node = Node(key)
-                new_node.height = self.height + 1
+                new_node._parent = self
                 self.right = new_node
-                # evaluate rotation
+                new_node.recalculate_height_up()
                 return True
             else:
                 return self.right.insert(key)
