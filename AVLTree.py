@@ -1,6 +1,7 @@
 """
 Implementation of AVL tree
 """
+import unittest
 
 
 class Node:
@@ -97,6 +98,15 @@ class Node:
             output = output + self.right.print_inorder()
         return output
 
+    def get_key_height_inorder(self):
+        output = []
+        if self.left:
+            output = self.left.get_key_height_inorder()
+        output.append((self.key, self.height))
+        if self.right:
+            output = output + self.right.get_key_height_inorder()
+        return output
+
 
 class AVL:
     def __init__(self):
@@ -116,11 +126,38 @@ class AVL:
     def print_inorder(self):
         if self._root:
             output = self._root.print_inorder()
-            print(" ".join(output))
+            return ", ".join(output)
         else:
-            print("Tree is empty!!!")
+            return "Tree is empty!!!"
+
+    def get_key_height_inorder(self):
+        if self._root:
+            return self._root.get_key_height_inorder()
+        else:
+            return []
+
+
+class TestAVL(unittest.TestCase):
+    def test_insert_single_element(self):
+        avl = AVL()
+        self.assertTrue(avl.insert(1))
+        self.assertEqual(avl.get_key_height_inorder(), [(1, 0)])
+        self.assertFalse(avl.insert(1))
+        self.assertEqual(avl.get_key_height_inorder(), [(1, 0)])
+
+    def test_insert_list_of_elements(self):
+        avl = AVL()
+        avl.insert_list([1, 2, 3, 4])
+        self.assertEqual(avl.get_key_height_inorder(),
+                         [(1, 3), (2, 2), (3, 1), (4, 0)])
+        avl.insert_list([1, 2, 3, 4])
+        self.assertEqual(avl.get_key_height_inorder(),
+                         [(1, 3), (2, 2), (3, 1), (4, 0)])
+
+    def test_print(self):
+        avl = AVL()
+        avl.insert_list([1, 2, 3, 4])
+        self.assertEqual(avl.print_inorder(), "1 [3], 2 [2], 3 [1], 4 [0]")
 
 if __name__ == '__main__':
-    avl = AVL()
-    avl.insert_list([3, 5, 6, 7, 8, -1])
-    avl.print_inorder()
+    unittest.main()
