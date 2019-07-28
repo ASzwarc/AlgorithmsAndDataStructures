@@ -24,14 +24,6 @@ class Node:
         self._key = value
 
     @property
-    def height(self):
-        return self._height
-
-    @height.setter
-    def height(self, value):
-        self._height = value
-
-    @property
     def left(self):
         return self._left
 
@@ -62,7 +54,7 @@ class Node:
     def recalculate_height_up(self):
         node = self._parent
         while node:
-            node.height = max([child.height if child else -1 for child in
+            node._height = max([child._height if child else -1 for child in
                                [node.left, node.right]]) + 1
             node = node._parent
 
@@ -102,7 +94,7 @@ class Node:
         output = []
         if self.left:
             output = self.left.get_key_height_inorder()
-        output.append((self.key, self.height))
+        output.append((self.key, self._height))
         if self.right:
             output = output + self.right.get_key_height_inorder()
         return output
