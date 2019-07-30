@@ -40,7 +40,17 @@ class Node:
         self._right = node
 
     def left_rotation(self):
-        pass
+        new_root = self.right
+        new_root._parent = self._parent
+        if new_root.left:
+            self.right = new_root.left
+            new_root.left._parent = self.right
+        else:
+            self.right = None
+        new_root.left = self
+        self._parent = new_root
+        self.recalculate_height_up()
+        return new_root
 
     def right_rotation(self):
         pass
@@ -127,6 +137,25 @@ class AVL:
             return self._root.get_key_height_inorder()
         else:
             return []
+
+
+class TestNode(unittest.TestCase):
+    def test_left_rotation(self):
+        root = Node(1)
+        root.insert(2)
+        root.insert(3)
+        self.assertEqual(['1 [2]', '2 [1]', '3 [0]'], root.print_inorder())
+        root = root.left_rotation()
+        self.assertEqual(['1 [0]', '2 [1]', '3 [0]'], root.print_inorder())
+        root = Node(0)
+        root.insert(2)
+        root.insert(3)
+        root.insert(1)
+        self.assertEqual(['0 [2]', '1 [0]', '2 [1]', '3 [0]'],
+                         root.print_inorder())
+        root = root.left_rotation()
+        self.assertEqual(['0 [1]', '1 [0]', '2 [2]', '3 [0]'],
+                         root.print_inorder())
 
 
 class TestAVL(unittest.TestCase):
