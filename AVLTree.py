@@ -15,39 +15,15 @@ class Node:
     def __str__(self):
         return f"{self._key} [{self._height}]"
 
-    @property
-    def key(self):
-        return self._key
-
-    @key.setter
-    def key(self, value):
-        self._key = value
-
-    @property
-    def left(self):
-        return self._left
-
-    @left.setter
-    def left(self, node):
-        self._left = node
-
-    @property
-    def right(self):
-        return self._right
-
-    @right.setter
-    def right(self, node):
-        self._right = node
-
     def left_rotation(self):
-        new_root = self.right
+        new_root = self._right
         new_root._parent = self._parent
-        if new_root.left:
-            self.right = new_root.left
-            new_root.left._parent = self.right
+        if new_root._left:
+            self._right = new_root._left
+            new_root._left._parent = self._right
         else:
-            self.right = None
-        new_root.left = self
+            self._right = None
+        new_root._left = self
         self._parent = new_root
         self.recalculate_height_up()
         return new_root
@@ -62,51 +38,51 @@ class Node:
         pass
 
     def recalculate_height_up(self):
-        node = self._parent
+        node = self
         while node:
             node._height = max([child._height if child else -1 for child in
-                               [node.left, node.right]]) + 1
+                               [node._left, node._right]]) + 1
             node = node._parent
 
     def insert(self, key):
-        if self.key == key:
+        if self._key == key:
             return False
-        elif key < self.key:
-            if not self.left:
+        elif key < self._key:
+            if not self._left:
                 new_node = Node(key)
                 new_node._parent = self
-                self.left = new_node
+                self._left = new_node
                 new_node.recalculate_height_up()
                 return True
             else:
-                return self.left.insert(key)
+                return self._left.insert(key)
         else:  # key > self.key
-            if not self.right:
+            if not self._right:
                 new_node = Node(key)
                 new_node._parent = self
-                self.right = new_node
+                self._right = new_node
                 new_node.recalculate_height_up()
                 return True
             else:
-                return self.right.insert(key)
+                return self._right.insert(key)
         return False
 
     def print_inorder(self):
         output = []
-        if self.left:
-            output = self.left.print_inorder()
+        if self._left:
+            output = self._left.print_inorder()
         output.append(str(self))
-        if self.right:
-            output = output + self.right.print_inorder()
+        if self._right:
+            output = output + self._right.print_inorder()
         return output
 
     def get_key_height_inorder(self):
         output = []
-        if self.left:
-            output = self.left.get_key_height_inorder()
-        output.append((self.key, self._height))
-        if self.right:
-            output = output + self.right.get_key_height_inorder()
+        if self._left:
+            output = self._left.get_key_height_inorder()
+        output.append((self._key, self._height))
+        if self._right:
+            output = output + self._right.get_key_height_inorder()
         return output
 
 
