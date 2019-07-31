@@ -18,18 +18,27 @@ class Node:
     def left_rotation(self):
         new_root = self._right
         new_root._parent = self._parent
+        self._parent = new_root
         if new_root._left:
             self._right = new_root._left
             new_root._left._parent = self._right
         else:
             self._right = None
         new_root._left = self
-        self._parent = new_root
         self.recalculate_height_up()
         return new_root
 
     def right_rotation(self):
-        pass
+        new_root = self._left
+        new_root._parent, self._parent = self._parent, new_root
+        if new_root._right:
+            self._left = new_root._right
+            new_root._right._parent = self._left
+        else:
+            self._left = None
+        new_root._right = self
+        self.recalculate_height_up()
+        return new_root
 
     def left_right_rotation(self):
         pass
@@ -144,6 +153,7 @@ class TestNode(unittest.TestCase):
         self.assertEqual(['1 [2]', '2 [1]', '3 [0]'], root.print_inorder())
         root = root.left_rotation()
         self.assertEqual(['1 [0]', '2 [1]', '3 [0]'], root.print_inorder())
+        # case where new root has left child
         root = Node(0)
         root.insert(2)
         root.insert(3)
@@ -152,6 +162,24 @@ class TestNode(unittest.TestCase):
                          root.print_inorder())
         root = root.left_rotation()
         self.assertEqual(['0 [1]', '1 [0]', '2 [2]', '3 [0]'],
+                         root.print_inorder())
+
+    def test_right_rotation(self):
+        root = Node(5)
+        root.insert(4)
+        root.insert(3)
+        self.assertEqual(['3 [0]', '4 [1]', '5 [2]'], root.print_inorder())
+        root = root.right_rotation()
+        self.assertEqual(['3 [0]', '4 [1]', '5 [0]'], root.print_inorder())
+        # case where new root has right child
+        root = Node(5)
+        root.insert(4)
+        root.insert(3)
+        root.insert(4.5)
+        self.assertEqual(['3 [0]', '4 [1]', '4.5 [0]', '5 [2]'],
+                         root.print_inorder())
+        root = root.right_rotation()
+        self.assertEqual(['3 [0]', '4 [2]', '4.5 [0]', '5 [1]'],
                          root.print_inorder())
 
 
