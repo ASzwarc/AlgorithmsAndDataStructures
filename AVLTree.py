@@ -44,6 +44,27 @@ class Node:
                                [node._left, node._right]]) + 1
             node = node._parent
 
+    def get_balance(self):
+        left_height, right_height = -1, -1
+        if self._left:
+            left_height = self._left._height
+        if self._right:
+            right_height = self._right._height
+        return left_height - right_height
+
+    def evaluate_balance_up(self):
+        node = self._parent
+        while node:
+            balance = node.get_balance()
+            if balance < -1:
+                # left rotation?
+                pass
+            elif balance > 1:
+                # right rotation?
+                pass
+            else:
+                pass
+
     def insert(self, key):
         if self._key == key:
             return False
