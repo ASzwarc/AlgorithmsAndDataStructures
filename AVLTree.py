@@ -147,20 +147,26 @@ class AVL:
 
 class TestNode(unittest.TestCase):
     def test_left_rotation(self):
+        # GIVEN
         root = Node(1)
         root.insert(2)
         root.insert(3)
         self.assertEqual(['1 [2]', '2 [1]', '3 [0]'], root.print_inorder())
+        # WHEN
         root = root.left_rotation()
+        # THEN
         self.assertEqual(['1 [0]', '2 [1]', '3 [0]'], root.print_inorder())
         # case where new root has left child
+        # GIVEN
         root = Node(0)
         root.insert(2)
         root.insert(3)
         root.insert(1)
         self.assertEqual(['0 [2]', '1 [0]', '2 [1]', '3 [0]'],
                          root.print_inorder())
+        # WHEN
         root = root.left_rotation()
+        # THEN
         self.assertEqual(['0 [1]', '1 [0]', '2 [2]', '3 [0]'],
                          root.print_inorder())
 
@@ -181,6 +187,17 @@ class TestNode(unittest.TestCase):
         root = root.right_rotation()
         self.assertEqual(['3 [0]', '4 [2]', '4.5 [0]', '5 [1]'],
                          root.print_inorder())
+
+    def test_right_left_rotation(self):
+        # GIVEN
+        root = Node(-2)
+        root.insert(1)
+        root.insert(0)
+        self.assertEqual(['-2 [2]', '0 [0]', '1 [1]'], root.print_inorder())
+        # WHEN
+        root = root.right_left_rotation()
+        # THEN
+        self.assertEqual(['-2 [0]', '0 [1]', '1 [0]'], root.print_inorder())
 
 
 class TestAVL(unittest.TestCase):
