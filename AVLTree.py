@@ -41,7 +41,9 @@ class Node:
         return new_root
 
     def left_right_rotation(self):
-        pass
+        new_root = self._left.left_rotation()
+        self._left = new_root
+        return self.right_rotation()
 
     def right_left_rotation(self):
         new_root = self._right.right_rotation()
@@ -200,6 +202,17 @@ class TestNode(unittest.TestCase):
         root = root.right_left_rotation()
         # THEN
         self.assertEqual(['-2 [0]', '0 [1]', '1 [0]'], root.print_inorder())
+
+    def test_left_right_rotation(self):
+        # GIVEN
+        root = Node(5)
+        root.insert(3)
+        root.insert(4)
+        self.assertEqual(['3 [1]', '4 [0]', '5 [2]'], root.print_inorder())
+        # WHEN
+        root = root.left_right_rotation()
+        # THEN
+        self.assertEqual(['3 [0]', '4 [1]', '5 [0]'], root.print_inorder())
 
 
 class TestAVL(unittest.TestCase):
