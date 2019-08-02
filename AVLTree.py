@@ -44,7 +44,9 @@ class Node:
         pass
 
     def right_left_rotation(self):
-        pass
+        new_root = self._right.right_rotation()
+        self._right = new_root
+        return self.left_rotation()
 
     def recalculate_height_up(self):
         node = self
