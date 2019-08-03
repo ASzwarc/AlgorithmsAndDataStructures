@@ -25,6 +25,11 @@ class Node:
         else:
             self._right = None
         new_root._left = self
+        if new_root._parent is not None:
+            if new_root._parent._left is self:
+                new_root._parent._left = new_root
+            if new_root._parent._right is self:
+                new_root._parent._right = new_root
         self.recalculate_height_up()
         return new_root
 
@@ -37,6 +42,11 @@ class Node:
         else:
             self._left = None
         new_root._right = self
+        if new_root._parent is not None:
+            if new_root._parent._left is self:
+                new_root._parent._left = new_root
+            if new_root._parent._right is self:
+                new_root._parent._right = new_root
         self.recalculate_height_up()
         return new_root
 
@@ -66,30 +76,37 @@ class Node:
         return left_height - right_height
 
     def align_subtree(self):
-        node = self
-        balance = node.get_balance()
-        if balance < -1:  # right heavy
-            if node._right and node._right.get_balance() > 1:
-                node = node.right_left_rotation()
+        node = self._parent
+        if node is None:
+            return self
+        while node:
+            balance = node.get_balance()
+            if balance < -1:  # right heavy
+                if node._right and node._right.get_balance() > 1:
+                    node = node.right_left_rotation()
+                else:
+                    node = node.left_rotation()
+            elif balance > 1:  # left heavy
+                if node._left and node._left.get_balance() < -1:
+                    node = node.left_right_rotation()
+                else:
+                    node = node.right_rotation()
+            if node._parent is None:
+                return node
             else:
-                node = node.left_rotation()
-        elif balance > 1:  # left heavy
-            if node._left and node._left.get_balance() < -1:
-                node = node.left_right_rotation()
-            else:
-                node = node.right_rotation()
+                node = node._parent
         return node
 
     def insert(self, key):
         if self._key == key:
-            return False
+            return None
         elif key < self._key:
             if not self._left:
                 new_node = Node(key)
                 new_node._parent = self
                 self._left = new_node
                 new_node.recalculate_height_up()
-                return True
+                return new_node.align_subtree()
             else:
                 return self._left.insert(key)
         else:  # key > self.key
@@ -98,10 +115,10 @@ class Node:
                 new_node._parent = self
                 self._right = new_node
                 new_node.recalculate_height_up()
-                return True
+                return new_node.align_subtree()
             else:
                 return self._right.insert(key)
-        return False
+        return None
 
     def print_inorder(self):
         output = []
@@ -131,10 +148,9 @@ class AVL:
             self._root = Node(key)
             return True
         else:
-            ret_val = self._root.insert(key)
-            if ret_val:
-                self._root = self._root.align_subtree()
-            return ret_val
+            node = self._root.insert(key)
+            if node and node._parent is None:
+                self._root = node
 
     def insert_list(self, iterable):
         for item in iterable:
@@ -158,25 +174,19 @@ class TestNode(unittest.TestCase):
     def test_left_rotation(self):
         # GIVEN
         root = Node(1)
-        root.insert(2)
-        root.insert(3)
-        self.assertEqual([(1, 2), (2, 1), (3, 0)],
-                         root.get_key_height_inorder())
+        root = root.insert(2)
         # WHEN
-        root = root.left_rotation()
+        root = root.insert(3)
         # THEN
         self.assertEqual([(1, 0), (2, 1), (3, 0)],
                          root.get_key_height_inorder())
         # case where new root has left child
         # GIVEN
         root = Node(0)
-        root.insert(2)
-        root.insert(3)
-        root.insert(1)
-        self.assertEqual([(0, 2), (1, 0), (2, 1), (3, 0)],
-                         root.get_key_height_inorder())
+        root = root.insert(2)
+        root = root.insert(3)
         # WHEN
-        root = root.left_rotation()
+        root = root.insert(1)
         # THEN
         self.assertEqual([(0, 1), (1, 0), (2, 2), (3, 0)],
                          root.get_key_height_inorder())
@@ -231,9 +241,9 @@ class TestNode(unittest.TestCase):
 class TestAVL(unittest.TestCase):
     def test_insert_single_element(self):
         avl = AVL()
-        self.assertTrue(avl.insert(1))
+        avl.insert(1)
         self.assertEqual(avl.get_key_height_inorder(), [(1, 0)])
-        self.assertFalse(avl.insert(1))
+        avl.insert(1)
         self.assertEqual(avl.get_key_height_inorder(), [(1, 0)])
 
     def test_insert_list_of_elements(self):
@@ -243,7 +253,13 @@ class TestAVL(unittest.TestCase):
                          [(1, 0), (2, 2), (3, 1), (4, 0)])
         avl.insert_list([1, 2, 3, 4])
         self.assertEqual(avl.get_key_height_inorder(),
-                         [(1, 3), (2, 2), (3, 1), (4, 0)])
+                         [(1, 0), (2, 2), (3, 1), (4, 0)])
+        avl.insert(5)
+        self.assertEqual(avl.get_key_height_inorder(),
+                         [(1, 0), (2, 2), (3, 0), (4, 1), (5, 0)])
+        # avl.insert_list([6, 7])
+        # self.assertEqual(avl.get_key_height_inorder(),
+        #                  [(1, 0), (2, 1), (3, 2), (4, 1), (5, 0)])
 
     def test_print(self):
         avl = AVL()
