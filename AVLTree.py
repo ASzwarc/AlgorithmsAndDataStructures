@@ -192,34 +192,31 @@ class TestNode(unittest.TestCase):
                          root.get_key_height_inorder())
 
     def test_right_rotation(self):
+        # GIVEN
         root = Node(5)
-        root.insert(4)
-        root.insert(3)
-        self.assertEqual([(3, 0), (4, 1), (5, 2)],
-                         root.get_key_height_inorder())
-        root = root.right_rotation()
+        root = root.insert(4)
+        # WHEN
+        root = root.insert(3)
+        # THEN
         self.assertEqual([(3, 0), (4, 1), (5, 0)],
                          root.get_key_height_inorder())
         # case where new root has right child
+        # GIVEN
         root = Node(5)
-        root.insert(4)
-        root.insert(3)
-        root.insert(4.5)
-        self.assertEqual([(3, 0), (4, 1), (4.5, 0), (5, 2)],
-                         root.get_key_height_inorder())
-        root = root.right_rotation()
+        root = root.insert(4)
+        root = root.insert(3)
+        # WHEN
+        root = root.insert(4.5)
+        # THEN
         self.assertEqual([(3, 0), (4, 2), (4.5, 0), (5, 1)],
                          root.get_key_height_inorder())
 
     def test_right_left_rotation(self):
         # GIVEN
         root = Node(-2)
-        root.insert(1)
-        root.insert(0)
-        self.assertEqual([(-2, 2), (0, 0), (1, 1)],
-                         root.get_key_height_inorder())
+        root = root.insert(1)
         # WHEN
-        root = root.right_left_rotation()
+        root = root.insert(0)
         # THEN
         self.assertEqual([(-2, 0), (0, 1), (1, 0)],
                          root.get_key_height_inorder())
@@ -227,12 +224,9 @@ class TestNode(unittest.TestCase):
     def test_left_right_rotation(self):
         # GIVEN
         root = Node(5)
-        root.insert(3)
-        root.insert(4)
-        self.assertEqual([(3, 1), (4, 0), (5, 2)],
-                         root.get_key_height_inorder())
+        root = root.insert(3)
         # WHEN
-        root = root.left_right_rotation()
+        root = root.insert(4)
         # THEN
         self.assertEqual([(3, 0), (4, 1), (5, 0)],
                          root.get_key_height_inorder())
