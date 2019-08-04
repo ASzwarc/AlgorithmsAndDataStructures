@@ -119,13 +119,13 @@ class Node:
                 return self._right.insert(key)
         return None
 
-    def print_inorder(self):
+    def get_inorder(self):
         output = []
         if self._left:
-            output = self._left.print_inorder()
+            output = self._left.get_inorder()
         output.append(str(self))
         if self._right:
-            output = output + self._right.print_inorder()
+            output = output + self._right.get_inorder()
         return output
 
     def get_key_height_inorder(self):
@@ -155,9 +155,9 @@ class AVL:
         for item in iterable:
             self.insert(item)
 
-    def print_inorder(self):
+    def get_inorder(self):
         if self._root:
-            output = self._root.print_inorder()
+            output = self._root.get_inorder()
             return ", ".join(output)
         else:
             return "Tree is empty!!!"
