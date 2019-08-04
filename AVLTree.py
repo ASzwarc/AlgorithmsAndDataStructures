@@ -82,12 +82,12 @@ class Node:
         while node:
             balance = node.get_balance()
             if balance < -1:  # right heavy
-                if node._right and node._right.get_balance() > 1:
+                if node._right and node._right.get_balance() >= 1:
                     node = node.right_left_rotation()
                 else:
                     node = node.left_rotation()
             elif balance > 1:  # left heavy
-                if node._left and node._left.get_balance() < -1:
+                if node._left and node._left.get_balance() <= -1:
                     node = node.left_right_rotation()
                 else:
                     node = node.right_rotation()
