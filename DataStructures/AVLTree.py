@@ -137,6 +137,16 @@ class Node:
             output = output + self._right.get_key_height_inorder()
         return output
 
+    def find(self, key):
+        if key == self._key:
+            return self
+        elif key < self._key and self._left:
+            return self._left.find(key)
+        elif key > self._key and self._right:
+            return self._right.find(key)
+        else:
+            return None
+
 
 class AVL:
     def __init__(self):
@@ -155,7 +165,7 @@ class AVL:
         for item in iterable:
             self.insert(item)
 
-    def get_inorder(self):
+    def print_inorder(self):
         if self._root:
             output = self._root.get_inorder()
             return ", ".join(output)
@@ -167,3 +177,9 @@ class AVL:
             return self._root.get_key_height_inorder()
         else:
             return []
+
+    def find(self, key) -> bool:
+        if not self._root:
+            return False
+        else:
+            return bool(self._root.find(key))

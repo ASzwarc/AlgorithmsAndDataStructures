@@ -92,3 +92,17 @@ class TestAVL(unittest.TestCase):
         avl = AVL()
         avl.insert_list([1, 2, 3, 4])
         self.assertEqual(avl.print_inorder(), "1 [0], 2 [2], 3 [1], 4 [0]")
+
+    def test_find(self):
+        # GIVEN
+        avl = AVL()
+        # THEN
+        self.assertFalse(avl.find(0))
+        # WHEN
+        avl.insert(2)
+        # THEN
+        self.assertFalse(avl.find(0))
+        # WHEN
+        avl.insert(0)
+        # THEN
+        self.assertTrue(avl.find(0))
