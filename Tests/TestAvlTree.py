@@ -136,3 +136,19 @@ class TestAVL(unittest.TestCase):
         avl.insert([1, 2, 3, 4, 5])
         # THEN
         self.assertEqual(avl.min(), 1)
+
+    def test_iteration(self):
+        # GIVEN
+        avl = AVL()
+        # THEN
+        result = []
+        for element in avl:
+            result.append(element)
+        self.assertListEqual(result, [])
+        # WHEN
+        avl.insert([4, 6, 8, 2, 1])
+        # THEN
+        result = []
+        for element in avl:
+            result.append(element)
+        self.assertListEqual(result, [(1, 0), (2, 1), (4, 0), (6, 2), (8, 0)])

@@ -168,6 +168,12 @@ class AVL():
     def __contains__(self, data):
         return self.find(data)
 
+    def __iter__(self):
+        if self._root:
+            return iter(self._root.get_key_height_inorder())
+        else:
+            return iter([])
+
     def insert_element(self, key):
         if not self._root:
             self._root = Node(key)
