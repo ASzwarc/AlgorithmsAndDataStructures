@@ -1,6 +1,7 @@
 """
 Implementation of AVL tree
 """
+from collections.abc import Iterable
 
 
 class Node:
@@ -147,26 +148,40 @@ class Node:
         else:
             return None
 
+    def max(self):
+        node = self
+        while node._right:
+            node = node._right
+        return node._key
 
-class AVL:
+    def min(self):
+        node = self
+        while node._left:
+            node = node._left
+        return node._key
+
+
+class AVL():
     def __init__(self):
         self._root = None
 
     def __contains__(self, data):
         return self.find(data)
 
-    def insert(self, key) -> bool:
+    def insert_element(self, key):
         if not self._root:
             self._root = Node(key)
-            return True
         else:
             node = self._root.insert(key)
             if node and node._parent is None:
                 self._root = node
 
-    def insert_list(self, iterable):
-        for item in iterable:
-            self.insert(item)
+    def insert(self, items):
+        if isinstance(items, Iterable):
+            for item in items:
+                self.insert(item)
+        else:
+            self.insert_element(items)
 
     def print_inorder(self):
         if self._root:
@@ -186,3 +201,15 @@ class AVL:
             return False
         else:
             return bool(self._root.find(key))
+
+    def max(self):
+        if self._root:
+            return self._root.max()
+        else:
+            return None
+
+    def min(self):
+        if self._root:
+            return self._root.min()
+        else:
+            return None

@@ -74,23 +74,23 @@ class TestAVL(unittest.TestCase):
 
     def test_insert_list_of_elements(self):
         avl = AVL()
-        avl.insert_list([1, 2, 3, 4])
+        avl.insert([1, 2, 3, 4])
         self.assertEqual(avl.get_key_height_inorder(),
                          [(1, 0), (2, 2), (3, 1), (4, 0)])
-        avl.insert_list([1, 2, 3, 4])
+        avl.insert([1, 2, 3, 4])
         self.assertEqual(avl.get_key_height_inorder(),
                          [(1, 0), (2, 2), (3, 1), (4, 0)])
         avl.insert(5)
         self.assertEqual(avl.get_key_height_inorder(),
                          [(1, 0), (2, 2), (3, 0), (4, 1), (5, 0)])
-        avl.insert_list([6, 7])
+        avl.insert([6, 7])
         self.assertEqual(avl.get_key_height_inorder(),
                          [(1, 0), (2, 1), (3, 0), (4, 2), (5, 0), (6, 1),
                           (7, 0)])
 
     def test_print(self):
         avl = AVL()
-        avl.insert_list([1, 2, 3, 4])
+        avl.insert([1, 2, 3, 4])
         self.assertEqual(avl.print_inorder(), "1 [0], 2 [2], 3 [1], 4 [0]")
 
     def test_find(self):
@@ -116,3 +116,23 @@ class TestAVL(unittest.TestCase):
         avl.insert(0)
         # THEN
         self.assertTrue(0 in avl)
+
+    def test_max(self):
+        # GIVEN
+        avl = AVL()
+        # THEN
+        self.assertEqual(avl.max(), None)
+        # WHEN
+        avl.insert([1, 2, 3, 4, 5])
+        # THEN
+        self.assertEqual(avl.max(), 5)
+
+    def test_min(self):
+        # GIVEN
+        avl = AVL()
+        # THEN
+        self.assertEqual(avl.min(), None)
+        # WHEN
+        avl.insert([1, 2, 3, 4, 5])
+        # THEN
+        self.assertEqual(avl.min(), 1)
