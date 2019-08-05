@@ -152,6 +152,9 @@ class AVL:
     def __init__(self):
         self._root = None
 
+    def __contains__(self, data):
+        return self.find(data)
+
     def insert(self, key) -> bool:
         if not self._root:
             self._root = Node(key)

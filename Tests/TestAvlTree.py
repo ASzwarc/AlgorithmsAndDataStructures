@@ -106,3 +106,13 @@ class TestAVL(unittest.TestCase):
         avl.insert(0)
         # THEN
         self.assertTrue(avl.find(0))
+
+    def test_contains(self):
+        # GIVEN
+        avl = AVL()
+        # THEN
+        self.assertFalse(0 in avl)
+        # WHEN
+        avl.insert(0)
+        # THEN
+        self.assertTrue(0 in avl)
