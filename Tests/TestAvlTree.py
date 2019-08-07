@@ -152,3 +152,10 @@ class TestAVL(unittest.TestCase):
         for element in avl:
             result.append(element)
         self.assertListEqual(result, [(1, 0), (2, 1), (4, 0), (6, 2), (8, 0)])
+
+    def test_delete(self):
+        avl = AVL()
+        self.assertEqual(avl.delete(1), None)
+        avl.insert([4, 6, 8, 2, 1])
+        self.assertEqual(avl.delete(4)._key, 4)
+        self.assertEqual(avl.delete(1)._key, 1)

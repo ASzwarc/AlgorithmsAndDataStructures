@@ -160,6 +160,26 @@ class Node:
             node = node._left
         return node._key
 
+    def delete(self, key):
+        # TODO handle case when node to be deleted is root
+        node = self.find(key)
+        if node:
+            # node has 0 children
+            if node._left is None and node._right is None:
+                if node._parent._left is node:
+                    node._parent._left = None
+                else:
+                    node._parent._right = None
+                parent = node._parent
+                node._parent.recalculate_height_up()
+                node._parent.align_subtree()
+                node._parent = None
+                return node
+            # node has 1 child
+            # node has 2 children
+        else:
+            return None
+
 
 class AVL():
     def __init__(self):
@@ -217,5 +237,11 @@ class AVL():
     def min(self):
         if self._root:
             return self._root.min()
+        else:
+            return None
+
+    def delete(self, key):
+        if self._root:
+            return self._root.delete(key)
         else:
             return None
