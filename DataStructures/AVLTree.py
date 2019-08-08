@@ -76,9 +76,7 @@ class Node:
         return left_height - right_height
 
     def align_subtree(self):
-        node = self._parent
-        if node is None:
-            return self
+        node = self
         while node:
             balance = node.get_balance()
             if balance < -1:  # right heavy
@@ -160,23 +158,51 @@ class Node:
             node = node._left
         return node._key
 
+    def is_root(self):
+        return self._parent is None
+
+    def get_root_node(self):
+        node = self
+        while node:
+            if node.is_root():
+                return node
+            node = node._parent
+
+    def get_child_no(self):
+        return len([0 for child in [self._left, self._right] if child is not None])
+
     def delete(self, key):
         # TODO handle case when node to be deleted is root
         node = self.find(key)
         if node:
             # node has 0 children
-            if node._left is None and node._right is None:
+            if node.get_child_no() == 0:
                 if node._parent._left is node:
                     node._parent._left = None
                 else:
                     node._parent._right = None
-                parent = node._parent
                 node._parent.recalculate_height_up()
-                node._parent.align_subtree()
+                node._parent = node._parent.align_subtree()
                 node._parent = None
                 return node
             # node has 1 child
+            elif node.get_child_no() == 1:
+                if node._left:
+                    child = node._left
+                else:
+                    child = node._right
+                if node._parent._left is node:
+                    node._parent._left = child
+                else:
+                    node._parent._right = child
+                child._parent = node._parent
+                node._parent = None
+                child.recalculate_height_up()
+                child = child.align_subtree()
+                return node
             # node has 2 children
+            else:
+                pass
         else:
             return None
 
@@ -242,6 +268,9 @@ class AVL():
 
     def delete(self, key):
         if self._root:
-            return self._root.delete(key)
+            ret_val = self._root.delete(key)
+            if not self._root.is_root():
+                self._root = self._root.get_root_node()
+            return ret_val
         else:
             return None
