@@ -181,25 +181,27 @@ class Node:
                     node._parent._left = None
                 else:
                     node._parent._right = None
-                node._parent.recalculate_height_up()
-                node._parent = node._parent.align_subtree()
+                parent = node._parent
+                parent.recalculate_height_up()
+                parent = parent.align_subtree()
                 node._parent = None
-                return node
+                return parent
             # node has 1 child
             elif node.get_child_no() == 1:
                 if node._left:
                     child = node._left
                 else:
                     child = node._right
-                if node._parent._left is node:
-                    node._parent._left = child
-                else:
-                    node._parent._right = child
+                if node._parent:
+                    if node._parent._left is node:
+                        node._parent._left = child
+                    else:
+                        node._parent._right = child
                 child._parent = node._parent
                 node._parent = None
                 child.recalculate_height_up()
                 child = child.align_subtree()
-                return node
+                return child
             # node has 2 children
             else:
                 pass
@@ -268,9 +270,9 @@ class AVL():
 
     def delete(self, key):
         if self._root:
-            ret_val = self._root.delete(key)
-            if not self._root.is_root():
-                self._root = self._root.get_root_node()
-            return ret_val
+            new_node = self._root.delete(key)
+            if new_node and new_node.is_root():
+                self._root = new_node
+            return True
         else:
-            return None
+            return False

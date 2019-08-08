@@ -155,12 +155,12 @@ class TestAVL(unittest.TestCase):
 
     def test_delete(self):
         avl = AVL()
-        self.assertEqual(avl.delete(1), None)
+        self.assertFalse(avl.delete(1))
         avl.insert([4, 6, 8, 2, 1])
-        self.assertEqual(avl.delete(4)._key, 4)
-        self.assertEqual(avl.delete(1)._key, 1)
+        self.assertTrue(avl.delete(4))
+        self.assertTrue(avl.delete(1))
         avl.insert([1, 4])
-        self.assertEqual(avl.delete(8)._key, 8)
+        self.assertTrue(avl.delete(8))
         self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (2, 2), (4, 0), (6, 1)])
-        self.assertEqual(avl.delete(6)._key, 6)
+        self.assertTrue(avl.delete(6))
         self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (2, 1), (4, 0)])
