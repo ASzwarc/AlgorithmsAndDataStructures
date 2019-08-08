@@ -150,13 +150,13 @@ class Node:
         node = self
         while node._right:
             node = node._right
-        return node._key
+        return node
 
     def min(self):
         node = self
         while node._left:
             node = node._left
-        return node._key
+        return node
 
     def is_root(self):
         return self._parent is None
@@ -258,13 +258,13 @@ class AVL():
 
     def max(self):
         if self._root:
-            return self._root.max()
+            return self._root.max()._key
         else:
             return None
 
     def min(self):
         if self._root:
-            return self._root.min()
+            return self._root.min()._key
         else:
             return None
 
