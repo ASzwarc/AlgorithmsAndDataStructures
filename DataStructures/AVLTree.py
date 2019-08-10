@@ -169,36 +169,44 @@ class Node:
             node = node._parent
 
     def get_child_no(self):
-        return len([0 for child in [self._left, self._right] if child is not None])
+        return len([0 for child in [self._left, self._right]
+                    if child is not None])
+
+    def _delete_node_without_children(self):
+        if self._parent._left is self:
+            self._parent._left = None
+        else:
+            self._parent._right = None
+        parent = self._parent
+        self._parent = None
+        return parent
+
+    def _delete_node_with_one_child(self):
+        if self._left:
+            child = self._left
+        else:
+            child = self._right
+        if self._parent:
+            if self._parent._left is self:
+                self._parent._left = child
+            else:
+                self._parent._right = child
+        child._parent = self._parent
+        self._parent = None
+        return child
 
     def delete(self, key):
-        # TODO handle case when node to be deleted is root
         node = self.find(key)
         if node:
             # node has 0 children
             if node.get_child_no() == 0:
-                if node._parent._left is node:
-                    node._parent._left = None
-                else:
-                    node._parent._right = None
-                parent = node._parent
+                parent = node._delete_node_without_children()
                 parent.recalculate_height_up()
                 parent = parent.align_subtree()
-                node._parent = None
                 return parent
             # node has 1 child
             elif node.get_child_no() == 1:
-                if node._left:
-                    child = node._left
-                else:
-                    child = node._right
-                if node._parent:
-                    if node._parent._left is node:
-                        node._parent._left = child
-                    else:
-                        node._parent._right = child
-                child._parent = node._parent
-                node._parent = None
+                child = node._delete_node_with_one_child()
                 child.recalculate_height_up()
                 child = child.align_subtree()
                 return child
@@ -270,6 +278,9 @@ class AVL():
 
     def delete(self, key):
         if self._root:
+            if self._root._key == key and self._root.get_child_no() == 0:
+                self._root = None
+                return True
             new_node = self._root.delete(key)
             if new_node and new_node.is_root():
                 self._root = new_node
