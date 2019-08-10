@@ -180,4 +180,13 @@ class TestAVL(unittest.TestCase):
                              (4, 0)])
         # WHEN delete root node with 2 childred
         self.assertTrue(avl.delete(2))
-        self.assertListEqual(avl.get_key_height_inorder(), [(1, 1), (4, 0)])
+        self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (4, 1)])
+        # GIVEN
+        avl.insert([5, 2, 0])
+        self.assertListEqual(avl.get_key_height_inorder(), [(0, 0), (1, 1),
+                             (2, 0), (4, 2), (5, 0)])
+        # WHEN delete node with 2 children
+        self.assertTrue(avl.delete(1))
+        # THEN
+        self.assertListEqual(avl.get_key_height_inorder(), [(0, 0), (2, 1),
+                             (4, 2), (5, 0)])
