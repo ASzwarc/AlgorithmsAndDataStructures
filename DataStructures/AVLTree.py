@@ -195,6 +195,16 @@ class Node:
         self._parent = None
         return child
 
+    def _delete_node_with_two_children(self):
+        successor = self._right.min()
+        new_key = successor._key
+        if successor.get_child_no() == 0:
+            leaf = successor._delete_node_without_children()
+        else:
+            leaf = successor._delete_node_with_one_child()
+        self._key = new_key
+        return leaf
+
     def delete(self, key):
         node = self.find(key)
         if node:
@@ -212,7 +222,10 @@ class Node:
                 return child
             # node has 2 children
             else:
-                pass
+                leaf = node._delete_node_with_two_children()
+                leaf.recalculate_height_up()
+                leaf = leaf.align_subtree()
+                return leaf
         else:
             return None
 

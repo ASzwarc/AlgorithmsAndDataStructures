@@ -154,13 +154,30 @@ class TestAVL(unittest.TestCase):
         self.assertListEqual(result, [(1, 0), (2, 1), (4, 0), (6, 2), (8, 0)])
 
     def test_delete(self):
+        # GIVEN
         avl = AVL()
+        # THEN deletion of node not in tree
         self.assertFalse(avl.delete(1))
+        # GIVEN
         avl.insert([4, 6, 8, 2, 1])
+        # WHEN delete node without children
         self.assertTrue(avl.delete(4))
         self.assertTrue(avl.delete(1))
+        # THEN
+        self.assertListEqual(avl.get_key_height_inorder(), [(2, 0), (6, 1),
+                                                            (8, 0)])
+        # GIVEN
         avl.insert([1, 4])
+        # WHEN delete node without childred
         self.assertTrue(avl.delete(8))
-        self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (2, 2), (4, 0), (6, 1)])
+        # THEN
+        self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (2, 2),
+                             (4, 0), (6, 1)])
+        # WHEN delete node with 1 child
         self.assertTrue(avl.delete(6))
-        self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (2, 1), (4, 0)])
+        # THEN
+        self.assertListEqual(avl.get_key_height_inorder(), [(1, 0), (2, 1),
+                             (4, 0)])
+        # WHEN delete root node with 2 childred
+        self.assertTrue(avl.delete(2))
+        self.assertListEqual(avl.get_key_height_inorder(), [(1, 1), (4, 0)])
