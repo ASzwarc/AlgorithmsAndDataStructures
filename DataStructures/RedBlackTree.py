@@ -14,6 +14,13 @@ class Node():
         self._parent = None
         self._color = NodeColor.BLACK
 
+    def __str__(self):
+        if self._color == NodeColor.RED:
+            color = "RED"
+        else:
+            color = "BLACK"
+        return f"{self._key} {color}"
+
 
 class RedBlackTree():
     def __init__(self):
