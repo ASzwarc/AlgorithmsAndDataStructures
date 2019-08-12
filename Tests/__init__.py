@@ -1,2 +1,2 @@
-from .AvlTreeTest import TestNode, TestAVL
-from .RedBlackTreeTest import TestNode, TestRedBlackTree
+from .AvlTreeTest import TestNode as TestAvlNode, TestAVL
+from .RedBlackTreeTest import TestNode as TestRedBlackNode, TestRedBlackTree
