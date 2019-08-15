@@ -10,9 +10,16 @@ class TestNode(unittest.TestCase):
         self.assertEqual(str(node), "1R")
 
     def test_insert(self):
-        node = Node(1)
-        self.assertFalse(node.insert(1))
-        self.assertTrue(node.insert(2))
+        node = Node(3)
+        self.assertFalse(node.insert(3))
+        self.assertTrue(node.insert(1))
+
+    def test_get_inorder(self):
+        node = Node(3)
+        node.insert(1)
+        node.insert(5)
+        self.assertListEqual([(1, NodeColor.RED), (3, NodeColor.BLACK),
+                              (5, NodeColor.RED)], node.get_inorder())
 
 
 class TestRedBlackTree(unittest.TestCase):

@@ -1,4 +1,5 @@
 from enum import Enum
+from collections.abc import Iterable
 
 
 class NodeColor(Enum):
@@ -63,6 +64,15 @@ class Node():
                     self._left._recolor_tree
                 return True
 
+    def get_inorder(self):
+        result = []
+        if self._left:
+            result = self._left.get_inorder()
+        result.append((self._key, self._color))
+        if self._right:
+            result = result + self._right.get_inorder()
+        return result
+
 
 class RedBlackTree():
     def __init__(self):
@@ -71,12 +81,21 @@ class RedBlackTree():
     def empty(self):
         return self._root is None
 
-    def insert(self, value):
-        if self.empty():
-            self._root = Node(value)
-            return True
+    def insert(self, values):
+        if isinstance(values, Iterable):
+            ret_val = True
+            for value in values:
+                if self.empty():
+                    self._root = Node(value)
+                else:
+                    ret_val = ret_val and self._root.insert(value)
+            return ret_val
         else:
-            return self._root.insert(value)
+            if self.empty():
+                self._root = Node(value)
+                return True
+            else:
+                return self._root.insert(value)
 
 if __name__ == '__main__':
     node = Node(1)
