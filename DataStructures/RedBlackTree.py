@@ -16,10 +16,10 @@ class Node():
 
     def __str__(self):
         if self._color == NodeColor.RED:
-            color = "RED"
+            color = "R"
         else:
-            color = "BLACK"
-        return f"{self._key} {color}"
+            color = "B"
+        return f"{self._key}{color}"
 
     def insert(self, value):
         if self._key == value:

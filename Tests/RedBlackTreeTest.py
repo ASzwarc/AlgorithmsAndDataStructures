@@ -5,9 +5,9 @@ from DataStructures.RedBlackTree import Node, RedBlackTree, NodeColor
 class TestNode(unittest.TestCase):
     def test_str(self):
         node = Node(1)
-        self.assertEqual(str(node), "1 BLACK")
+        self.assertEqual(str(node), "1B")
         node._color = NodeColor.RED
-        self.assertEqual(str(node), "1 RED")
+        self.assertEqual(str(node), "1R")
 
     def test_insert(self):
         node = Node(1)
