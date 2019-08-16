@@ -22,7 +22,7 @@ class Node():
             color = "B"
         return f"{self._key}{color}"
 
-    def _recolor_tree():
+    def _recolor_tree(self):
         if self._parent is None:
             self._color = NodeColor.BLACK
             return
@@ -51,7 +51,7 @@ class Node():
                 self._right._color = NodeColor.RED
                 self._right._parent = self
                 if self._color == NodeColor.RED:
-                    self._right._recolor_tree
+                    self._right._recolor_tree()
                 return True
         else:
             if self._left:
@@ -61,7 +61,7 @@ class Node():
                 self._left._color = NodeColor.RED
                 self._left._parent = self
                 if self._color == NodeColor.RED:
-                    self._left._recolor_tree
+                    self._left._recolor_tree()
                 return True
 
     def get_inorder(self):
@@ -98,4 +98,7 @@ class RedBlackTree():
                 return self._root.insert(value)
 
 if __name__ == '__main__':
-    node = Node(1)
+    node = Node(3)
+    node.insert(1)
+    node.insert(5)
+    node.insert(6)

@@ -20,6 +20,10 @@ class TestNode(unittest.TestCase):
         node.insert(5)
         self.assertListEqual([(1, NodeColor.RED), (3, NodeColor.BLACK),
                               (5, NodeColor.RED)], node.get_inorder())
+        node.insert(6)
+        self.assertListEqual([(1, NodeColor.BLACK), (3, NodeColor.BLACK),
+                              (5, NodeColor.BLACK), (6, NodeColor.RED)],
+                             node.get_inorder())
 
 
 class TestRedBlackTree(unittest.TestCase):
