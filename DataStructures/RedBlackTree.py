@@ -40,6 +40,21 @@ class Node():
             uncle_node._color = NodeColor.BLACK
             self._parent._parent._color = NodeColor.RED
             self._parent._parent._recolor_tree()
+        else:  # uncle is BLACK
+            if self._parent._parent._left is self._parent:
+                if self._parent._left is self:
+                    # left left case
+                    print(f"Left left case triggered by {self}")
+                else:  # self is right child of parent
+                    # left right case
+                    print(f"Left right case triggered by {self}")
+            else:  # parent is right child of grandparent
+                if self._parent._right is self:
+                    # right right case
+                    print(f"Right right case triggered by {self}")
+                else:
+                    # right left case
+                    print(f"Right left case triggered by {self}")
 
     def insert(self, value):
         if self._key == value:
