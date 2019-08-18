@@ -102,10 +102,16 @@ class RedBlackTree():
             return ret_val
         else:
             if self.empty():
-                self._root = Node(value)
+                self._root = Node(values)
                 return True
             else:
-                return self._root.insert(value)
+                return self._root.insert(values)
+
+    def get_inorder(self):
+        if self.empty():
+            return []
+        else:
+            return self._root.get_inorder()
 
 if __name__ == '__main__':
     node = Node(3)

@@ -30,3 +30,13 @@ class TestRedBlackTree(unittest.TestCase):
     def test_empty(self):
         rbt = RedBlackTree()
         self.assertTrue(rbt.empty())
+
+    def test_get_inorder(self):
+        rbt = RedBlackTree()
+        self.assertListEqual([], rbt.get_inorder())
+
+        rbt.insert(3)
+        rbt.insert(1)
+        rbt.insert(5)
+        self.assertListEqual([(1, NodeColor.RED), (3, NodeColor.BLACK),
+                              (5, NodeColor.RED)], rbt.get_inorder())
