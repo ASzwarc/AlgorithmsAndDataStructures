@@ -26,19 +26,20 @@ class Node():
         if self._parent is None:
             self._color = NodeColor.BLACK
             return
-        if self._parent._left is self:
-            uncle_node = self._parent._right
-        elif self._parent._right is self:
-            uncle_node = self._parent._left
+        if self._parent._parent and self._parent._parent._left is self._parent:
+            uncle_node = self._parent._parent._right
+        elif (self._parent._parent and
+              self._parent._parent._right is self._parent):
+            uncle_node = self._parent._parent._left
         else:
             print("_recolor_tree: this shouldn't happen!")
+            return
 
-        if (uncle_node and uncle_node._color == NodeColor.RED):
+        if uncle_node._color == NodeColor.RED:
             self._parent._color = NodeColor.BLACK
-            self._parent._left._color = NodeColor.BLACK
-            if self._parent._parent:
-                self._parent._parent._color = NodeColor.RED
-                self._parent._parent._recolor_tree()
+            uncle_node._color = NodeColor.BLACK
+            self._parent._parent._color = NodeColor.RED
+            self._parent._parent._recolor_tree()
 
     def insert(self, value):
         if self._key == value:
@@ -75,6 +76,15 @@ class Node():
 
 
 class RedBlackTree():
+    """
+    Class implementing Red Black Tree. It has to follow this rules:
+    1. each node must be either RED or BLACK
+    2. the root of the tree must be always be BLACK
+    3. two RED nodes can never appear in a row within a tree; a RED node must
+       always have a BLACK parent node and BLACK child nodes
+    4. every branch path from the root node in the tree to a null pointer
+       passes through the exact same number of BLACK nodes.
+    """
     def __init__(self):
         self._root = None
 
