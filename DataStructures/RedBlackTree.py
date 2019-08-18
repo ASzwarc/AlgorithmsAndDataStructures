@@ -74,6 +74,15 @@ class Node():
             result = result + self._right.get_inorder()
         return result
 
+    def print_inorder(self):
+        result = []
+        if self._left:
+            result = self._left.print_inorder()
+        result.append(str(self))
+        if self._right:
+            result = result + self._right.print_inorder()
+        return result
+
 
 class RedBlackTree():
     """
@@ -112,6 +121,12 @@ class RedBlackTree():
             return []
         else:
             return self._root.get_inorder()
+
+    def print_inorder(self):
+        if self.empty():
+            return ""
+        else:
+            return ", ".join(self._root.print_inorder())
 
 if __name__ == '__main__':
     node = Node(3)
