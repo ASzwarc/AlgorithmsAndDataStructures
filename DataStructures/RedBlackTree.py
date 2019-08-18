@@ -22,7 +22,20 @@ class Node():
             color = "B"
         return f"{self._key}{color}"
 
+    def _left_rotate(self, subtree_root: Node):
+        print(f"Left rotate on {subtree_root}")
+
+    def _left_right_rotate(self, subtree_root: Node):
+        print(f"Left right rotate on {subtree_root}")
+
+    def _right_rotate(self, subtree_root: Node):
+        print(f"Right rotate on {subtree_root}")
+
+    def _right_left_rotate(self, subtree_root: Node):
+        print(f"Right left rotate on {subtree_root}")
+
     def _recolor_tree(self):
+        # TODO Rename this function
         if self._parent is None:
             self._color = NodeColor.BLACK
             return
@@ -45,16 +58,20 @@ class Node():
                 if self._parent._left is self:
                     # left left case
                     print(f"Left left case triggered by {self}")
+                    self._right_rotate(self._parent)
                 else:  # self is right child of parent
                     # left right case
                     print(f"Left right case triggered by {self}")
+                    self._left_right_rotate(self._parent)
             else:  # parent is right child of grandparent
                 if self._parent._right is self:
                     # right right case
                     print(f"Right right case triggered by {self}")
+                    self._left_rotate(self._parent._parent)
                 else:
                     # right left case
                     print(f"Right left case triggered by {self}")
+                    self._right_left_rotate(self._parent)
 
     def insert(self, value):
         if self._key == value:
