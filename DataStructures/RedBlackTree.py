@@ -1,3 +1,4 @@
+from __future__ import annotations
 from enum import Enum
 from collections.abc import Iterable
 
@@ -34,8 +35,7 @@ class Node():
     def _right_left_rotate(self, subtree_root: Node):
         print(f"Right left rotate on {subtree_root}")
 
-    def _recolor_tree(self):
-        # TODO Rename this function
+    def _rebalance_tree(self):
         if self._parent is None:
             self._color = NodeColor.BLACK
             return
@@ -45,14 +45,14 @@ class Node():
               self._parent._parent._right is self._parent):
             uncle_node = self._parent._parent._left
         else:
-            print("_recolor_tree: this shouldn't happen!")
+            print("_rebalance_tree: this shouldn't happen!")
             return
 
         if uncle_node._color == NodeColor.RED:
             self._parent._color = NodeColor.BLACK
             uncle_node._color = NodeColor.BLACK
             self._parent._parent._color = NodeColor.RED
-            self._parent._parent._recolor_tree()
+            self._parent._parent._rebalance_tree()
         else:  # uncle is BLACK
             if self._parent._parent._left is self._parent:
                 if self._parent._left is self:
@@ -84,7 +84,7 @@ class Node():
                 self._right._color = NodeColor.RED
                 self._right._parent = self
                 if self._color == NodeColor.RED:
-                    self._right._recolor_tree()
+                    self._right._rebalance_tree()
                 return True
         else:
             if self._left:
@@ -94,7 +94,7 @@ class Node():
                 self._left._color = NodeColor.RED
                 self._left._parent = self
                 if self._color == NodeColor.RED:
-                    self._left._recolor_tree()
+                    self._left._rebalance_tree()
                 return True
 
     def get_inorder(self):
