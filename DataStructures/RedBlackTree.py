@@ -39,6 +39,14 @@ class Node():
 
     def _right_rotate(self, subtree_root: Node):
         print(f"Right rotate on {subtree_root}")
+        new_root = subtree_root._left
+        new_root._parent = subtree_root._parent
+        if new_root._right:
+            subtree_root._left = new_root._right
+            new_root._right._parent = subtree_root
+        subtree_root._parent = new_root
+        new_root._right = subtree_root
+        return new_root
 
     def _right_left_rotate(self, subtree_root: Node):
         print(f"Right left rotate on {subtree_root}")
@@ -66,7 +74,13 @@ class Node():
                 if self._parent._left is self:
                     # left left case
                     print(f"Left left case triggered by {self}")
-                    self._right_rotate(self._parent)
+                    self._parent._parent = self._right_rotate(
+                                            self._parent._parent)
+                    # swapping colors
+                    self._parent._parent._color, \
+                        self._parent._parent._right._color = \
+                        self._parent._parent._right._color, \
+                        self._parent._parent._color
                 else:  # self is right child of parent
                     # left right case
                     print(f"Left right case triggered by {self}")
