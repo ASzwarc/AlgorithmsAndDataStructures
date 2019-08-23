@@ -92,10 +92,10 @@ class Node():
                     self._parent._parent = self._left_rotate(
                                             self._parent._parent)
                     # swapping colors
-                    self._parent._parent._color,
-                    self._parent._parent._left._color =
-                    self._parent._parent._left._color,
-                    self._parent._parent._color
+                    self._parent._parent._color, \
+                        self._parent._parent._left._color \
+                        = self._parent._parent._left._color, \
+                        self._parent._parent._color
                 else:
                     # right left case
                     print(f"Right left case triggered by {self}")
