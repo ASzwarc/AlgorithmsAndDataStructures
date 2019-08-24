@@ -41,8 +41,8 @@ class Node():
         print(f"Right rotate on {subtree_root}")
         new_root = subtree_root._left
         new_root._parent = subtree_root._parent
+        subtree_root._left = new_root._right
         if new_root._right:
-            subtree_root._left = new_root._right
             new_root._right._parent = subtree_root
         subtree_root._parent = new_root
         new_root._right = subtree_root
