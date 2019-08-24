@@ -27,8 +27,8 @@ class Node():
         print(f"Left rotate on {subtree_root}")
         new_root = subtree_root._right
         new_root._parent = subtree_root._parent
+        subtree_root._right = new_root._left
         if new_root._left:
-            subtree_root._right = new_root._left
             new_root._left._parent = subtree_root
         subtree_root._parent = new_root
         new_root._left = subtree_root
@@ -93,8 +93,8 @@ class Node():
                                             self._parent._parent)
                     # swapping colors
                     self._parent._parent._color, \
-                        self._parent._parent._left._color \
-                        = self._parent._parent._left._color, \
+                        self._parent._parent._left._color = \
+                        self._parent._parent._left._color, \
                         self._parent._parent._color
                 else:
                     # right left case
