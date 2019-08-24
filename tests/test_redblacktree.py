@@ -1,5 +1,5 @@
 import unittest
-from DataStructures.RedBlackTree import Node, RedBlackTree, NodeColor
+from datastructures.red_black_tree import Node, RedBlackTree, NodeColor
 
 
 class TestNode(unittest.TestCase):
@@ -26,6 +26,19 @@ class TestNode(unittest.TestCase):
                              node.get_inorder())
 
 
+class TestRotationAndRecoloring(unittest.TestCase):
+    def test_left_left_case(self):
+        root = Node(15)
+        root._color = NodeColor.BLACK
+        root._left = Node(7)
+        root._left._color = NodeColor.RED
+        root._right = Node(25)
+        root._right._color = NodeColor.BLACK
+        self.assertListEqual([(7, NodeColor.RED), (15, NodeColor.BLACK),
+                              (25, NodeColor.BLACK)], root.get_inorder())
+        root.insert(3)
+
+
 class TestRedBlackTree(unittest.TestCase):
     def test_empty(self):
         rbt = RedBlackTree()
@@ -49,3 +62,6 @@ class TestRedBlackTree(unittest.TestCase):
         rbt.insert(1)
         rbt.insert(5)
         self.assertEqual("1R, 3B, 5R", rbt.print_inorder())
+
+if __name__ == "__main__":
+    unittest.main()

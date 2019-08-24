@@ -1,5 +1,5 @@
 import unittest
-from DataStructures.AVLTree import AVL, Node
+from datastructures.avl_tree import AVL, Node
 
 
 class TestNode(unittest.TestCase):
