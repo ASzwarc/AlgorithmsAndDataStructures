@@ -61,6 +61,23 @@ class TestRotationAndRecoloring(unittest.TestCase):
                               (25, NodeColor.BLACK), (27, NodeColor.RED)],
                              root.get_inorder())
 
+    def test_left_right_case(self):
+        root = Node(15)
+        root._color = NodeColor.BLACK
+        root._left = Node(7)
+        root._left._color = NodeColor.RED
+        root._left._parent = root
+        root._right = Node(25)
+        root._right._color = NodeColor.BLACK
+        root._right._parent = root
+        self.assertListEqual([(7, NodeColor.RED), (15, NodeColor.BLACK),
+                              (25, NodeColor.BLACK)], root.get_inorder())
+        root.insert(8)
+        root = root._parent
+        self.assertListEqual([(7, NodeColor.RED), (8, NodeColor.BLACK),
+                              (15, NodeColor.RED), (25, NodeColor.BLACK)],
+                             root.get_inorder())
+
 
 class TestRedBlackTree(unittest.TestCase):
     def test_empty(self):
