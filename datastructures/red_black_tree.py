@@ -141,6 +141,18 @@ class Node():
             result = result + self._right.print_inorder()
         return result
 
+    def max(self) -> Node:
+        current_node = self
+        while current_node._right:
+            current_node = current_node._right
+        return current_node
+
+    def min(self) -> Node:
+        current_node = self
+        while current_node._left:
+            current_node = current_node._left
+        return current_node
+
 
 class RedBlackTree():
     """
@@ -194,6 +206,16 @@ class RedBlackTree():
             return ""
         else:
             return ", ".join(self._root.print_inorder())
+
+    def max(self):
+        if self.empty():
+            return None
+        return self._root.max()._key
+
+    def min(self):
+        if self.empty():
+            return None
+        return self._root.min()._key
 
 if __name__ == '__main__':
     node = Node(3)
