@@ -93,7 +93,12 @@ class Node():
                         self._parent._parent._color
                 else:
                     print(f"Right left case triggered by {self}")
-                    self._right_left_rotate(self._parent)
+                    self._right_rotate(self._parent)
+                    self._parent._right = self
+                    self._left_rotate(self._parent)
+                    # swapping colors
+                    self._color, self._left._color = self._left._color, \
+                        self._color
 
     def insert(self, value):
         if self._key == value:
