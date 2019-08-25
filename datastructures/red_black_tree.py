@@ -156,6 +156,12 @@ class RedBlackTree():
     def __init__(self):
         self._root = None
 
+    def _find_new_root(self) -> Node:
+        new_root = self._root
+        while new_root._parent:
+            new_root = new_root._parent
+        return new_root
+
     def empty(self):
         return self._root is None
 
@@ -167,13 +173,16 @@ class RedBlackTree():
                     self._root = Node(value)
                 else:
                     ret_val = ret_val and self._root.insert(value)
+            self._root = self._find_new_root()
             return ret_val
         else:
             if self.empty():
                 self._root = Node(values)
                 return True
             else:
-                return self._root.insert(values)
+                ret_val = self._root.insert(values)
+                self._root = self._find_new_root()
+                return ret_val
 
     def get_inorder(self):
         if self.empty():
