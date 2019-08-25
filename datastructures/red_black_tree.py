@@ -32,6 +32,7 @@ class Node():
             new_root._left._parent = subtree_root
         subtree_root._parent = new_root
         new_root._left = subtree_root
+        return new_root
 
     def _right_rotate(self, subtree_root: Node):
         print(f"Right rotate on {subtree_root}")
@@ -57,7 +58,7 @@ class Node():
             print("_rebalance_tree: this shouldn't happen!")
             return
 
-        if uncle_node._color == NodeColor.RED:
+        if uncle_node and uncle_node._color == NodeColor.RED:
             self._parent._color = NodeColor.BLACK
             uncle_node._color = NodeColor.BLACK
             self._parent._parent._color = NodeColor.RED
@@ -66,13 +67,12 @@ class Node():
             if self._parent._parent._left is self._parent:
                 if self._parent._left is self:
                     print(f"Left left case triggered by {self}")
-                    self._parent._parent = self._right_rotate(
-                                            self._parent._parent)
+                    grandparent = self._parent._parent
+                    parent = self._parent
+                    self._right_rotate(grandparent)
                     # swapping colors
-                    self._parent._parent._color, \
-                        self._parent._parent._right._color = \
-                        self._parent._parent._right._color, \
-                        self._parent._parent._color
+                    grandparent._color, parent._color = \
+                        parent._color, grandparent._color
                 else:  # self is right child of parent
                     print(f"Left right case triggered by {self}")
                     self._left_rotate(self._parent)
@@ -84,13 +84,12 @@ class Node():
             else:  # parent is right child of grandparent
                 if self._parent._right is self:
                     print(f"Right right case triggered by {self}")
-                    self._parent._parent = self._left_rotate(
-                                            self._parent._parent)
+                    grandparent = self._parent._parent
+                    parent = self._parent
+                    self._left_rotate(grandparent)
                     # swapping colors
-                    self._parent._parent._color, \
-                        self._parent._parent._left._color = \
-                        self._parent._parent._left._color, \
-                        self._parent._parent._color
+                    grandparent._color, parent._color = \
+                        parent._color, grandparent._color
                 else:
                     print(f"Right left case triggered by {self}")
                     self._right_rotate(self._parent)

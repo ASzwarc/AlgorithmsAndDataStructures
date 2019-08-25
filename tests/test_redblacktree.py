@@ -120,5 +120,15 @@ class TestRedBlackTree(unittest.TestCase):
         rbt.insert(5)
         self.assertEqual("1R, 3B, 5R", rbt.print_inorder())
 
+    def test_insert(self):
+        rbt = RedBlackTree()
+        rbt.insert([10, 20, 30])
+        self.assertListEqual([(10, NodeColor.RED), (20, NodeColor.BLACK),
+                              (30, NodeColor.RED)], rbt.get_inorder())
+        rbt.insert(15)
+        self.assertListEqual([(10, NodeColor.BLACK), (15, NodeColor.RED),
+                              (20, NodeColor.BLACK), (30, NodeColor.BLACK)],
+                             rbt.get_inorder())
+
 if __name__ == "__main__":
     unittest.main()
