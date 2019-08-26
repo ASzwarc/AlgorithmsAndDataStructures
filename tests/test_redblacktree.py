@@ -133,17 +133,18 @@ class TestRedBlackTree(unittest.TestCase):
     def test_max(self):
         rbt = RedBlackTree()
         rbt.insert([10, 20, 56, 78])
-        # self.assertListEqual([(10, NodeColor.BLACK), (20, NodeColor.BLACK),
-        #                       (56, NodeColor.BLACK), (78, NodeColor.RED)],
-        #                      rbt.get_inorder())
+        self.assertListEqual([(10, NodeColor.BLACK), (20, NodeColor.BLACK),
+                              (56, NodeColor.BLACK), (78, NodeColor.RED)],
+                             rbt.get_inorder())
         self.assertEqual(rbt.max(), 78)
 
     def test_min(self):
         rbt = RedBlackTree()
         rbt.insert([0, 20, 1, 5])
-        # self.assertListEqual([(0, NodeColor.BLACK), (1, NodeColor.BLACK),
-        #                       (20, NodeColor.BLACK), (5, NodeColor.RED)],
-        #                      rbt.get_inorder())
+
+        self.assertListEqual([(0, NodeColor.BLACK), (1, NodeColor.BLACK),
+                              (5, NodeColor.RED), (20, NodeColor.BLACK)],
+                             rbt.get_inorder())
         self.assertEqual(rbt.min(), 0)
 
 if __name__ == "__main__":

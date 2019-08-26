@@ -184,7 +184,8 @@ class RedBlackTree():
                     self._root = Node(value)
                 else:
                     ret_val = ret_val and self._root.insert(value)
-            self._root = self._find_new_root()
+                    if ret_val:
+                        self._root = self._find_new_root()
             return ret_val
         else:
             if self.empty():
@@ -218,7 +219,6 @@ class RedBlackTree():
         return self._root.min()._key
 
 if __name__ == '__main__':
-    node = Node(3)
-    node.insert(1)
-    node.insert(5)
-    node.insert(6)
+    rbt = RedBlackTree()
+    rbt.insert([0, 20, 1, 5])
+    print(rbt.print_inorder())
