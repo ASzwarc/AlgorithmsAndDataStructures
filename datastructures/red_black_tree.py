@@ -156,6 +156,16 @@ class Node():
     def delete(self, key) -> Node:
         pass
 
+    def find(self, key) -> bool:
+        if self._key == key:
+            return True
+        elif self._key < key and self._right:
+            return self._right.find(key)
+        elif self._key > key and self._left:
+            return self._left.find(key)
+        else:
+            return False
+
 
 class RedBlackTree():
     """
@@ -226,6 +236,12 @@ class RedBlackTree():
             return None
         else:
             return self._root.delete()
+
+    def find(self, key):
+        if self.empty():
+            return False
+        else:
+            return self._root.find(key)
 
 
 if __name__ == '__main__':

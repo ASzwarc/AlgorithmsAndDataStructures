@@ -25,6 +25,16 @@ class TestNode(unittest.TestCase):
                               (5, NodeColor.BLACK), (6, NodeColor.RED)],
                              node.get_inorder())
 
+    def test_find(self):
+        node = Node(3)
+        node.insert(1)
+        node.insert(0)
+        node.insert(5)
+        node = node._parent
+        self.assertTrue(node.find(0))
+        self.assertTrue(node.find(5))
+        self.assertFalse(node.find(10))
+
 
 class TestRotationAndRecoloring(unittest.TestCase):
     def test_left_left_case(self):
@@ -146,6 +156,14 @@ class TestRedBlackTree(unittest.TestCase):
                               (5, NodeColor.RED), (20, NodeColor.BLACK)],
                              rbt.get_inorder())
         self.assertEqual(rbt.min(), 0)
+
+    def test_find(self):
+        rbt = RedBlackTree()
+        rbt.insert([3, 1, 0, 5])
+        self.assertTrue(rbt.find(0))
+        self.assertTrue(rbt.find(5))
+        self.assertFalse(rbt.find(10))
+
 
 if __name__ == "__main__":
     unittest.main()
