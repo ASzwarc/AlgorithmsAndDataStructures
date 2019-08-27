@@ -153,6 +153,9 @@ class Node():
             current_node = current_node._left
         return current_node
 
+    def delete(self, key) -> Node:
+        pass
+
 
 class RedBlackTree():
     """
@@ -217,6 +220,13 @@ class RedBlackTree():
         if self.empty():
             return None
         return self._root.min()._key
+
+    def delete(self, key):
+        if self.empty():
+            return None
+        else:
+            return self._root.delete()
+
 
 if __name__ == '__main__':
     rbt = RedBlackTree()
