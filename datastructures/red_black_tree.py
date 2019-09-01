@@ -160,13 +160,22 @@ class Node():
     def delete(self, key) -> Node:
         node = self.find(key)
         if node:
-            if self._get_child_no() == 2:  # node has 2 children
+            if node._get_child_no() == 2:  # node has 2 children
                 successors_key = node._right.min()._key
                 node._right.delete(successors_key)
                 node._key = successors_key
                 return
-            elif self._get_child_no() == 1:
-                return
+            elif node._get_child_no() == 1:
+                if ((node._color == NodeColor.RED) or
+                    (node._left and node._left._color == NodeColor.RED) or
+                    (node._right and node._right._color == NodeColor.RED)):
+                    node._color = NodeColor.BLACK
+                    if node._left:
+                        successors_key = node._left._key
+                    else:  # node._right
+                        successors_key = node._right._key
+                    node.delete(successors_key)
+                    node._key = successors_key
             else:  # node doesn't have any child
                 return
         else:
