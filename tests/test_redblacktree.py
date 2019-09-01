@@ -107,62 +107,58 @@ class TestRotationAndRecoloring(unittest.TestCase):
 
 
 class TestRedBlackTree(unittest.TestCase):
+    def setUp(self):
+        self.tree = RedBlackTree()
+
     def test_empty(self):
-        rbt = RedBlackTree()
-        self.assertTrue(rbt.empty())
+        self.assertTrue(self.tree.empty())
 
     def test_get_inorder(self):
-        rbt = RedBlackTree()
-        self.assertListEqual([], rbt.get_inorder())
+        self.assertListEqual([], self.tree.get_inorder())
 
-        rbt.insert(3)
-        rbt.insert(1)
-        rbt.insert(5)
+        self.tree.insert(3)
+        self.tree.insert(1)
+        self.tree.insert(5)
         self.assertListEqual([(1, NodeColor.RED), (3, NodeColor.BLACK),
-                              (5, NodeColor.RED)], rbt.get_inorder())
+                              (5, NodeColor.RED)], self.tree.get_inorder())
 
     def test_print_inorder(self):
-        rbt = RedBlackTree()
-        self.assertEqual("", rbt.print_inorder())
+        self.assertEqual("", self.tree.print_inorder())
 
-        rbt.insert(3)
-        rbt.insert(1)
-        rbt.insert(5)
-        self.assertEqual("1R, 3B, 5R", rbt.print_inorder())
+        self.tree.insert(3)
+        self.tree.insert(1)
+        self.tree.insert(5)
+        self.assertEqual("1R, 3B, 5R", self.tree.print_inorder())
 
     def test_insert(self):
-        rbt = RedBlackTree()
-        rbt.insert([10, 20, 30])
+        self.tree.insert([10, 20, 30])
         self.assertListEqual([(10, NodeColor.RED), (20, NodeColor.BLACK),
-                              (30, NodeColor.RED)], rbt.get_inorder())
-        rbt.insert(15)
+                              (30, NodeColor.RED)], self.tree.get_inorder())
+        self.tree.insert(15)
         self.assertListEqual([(10, NodeColor.BLACK), (15, NodeColor.RED),
                               (20, NodeColor.BLACK), (30, NodeColor.BLACK)],
-                             rbt.get_inorder())
+                             self.tree.get_inorder())
 
     def test_max(self):
-        rbt = RedBlackTree()
-        rbt.insert([10, 20, 56, 78])
+        self.tree.insert([10, 20, 56, 78])
         self.assertListEqual([(10, NodeColor.BLACK), (20, NodeColor.BLACK),
                               (56, NodeColor.BLACK), (78, NodeColor.RED)],
-                             rbt.get_inorder())
-        self.assertEqual(rbt.max(), 78)
+                             self.tree.get_inorder())
+        self.assertEqual(self.tree.max(), 78)
 
     def test_min(self):
-        rbt = RedBlackTree()
-        rbt.insert([0, 20, 1, 5])
+        self.tree.insert([0, 20, 1, 5])
 
         self.assertListEqual([(0, NodeColor.BLACK), (1, NodeColor.BLACK),
                               (5, NodeColor.RED), (20, NodeColor.BLACK)],
-                             rbt.get_inorder())
-        self.assertEqual(rbt.min(), 0)
+                             self.tree.get_inorder())
+        self.assertEqual(self.tree.min(), 0)
 
     def test_find(self):
-        rbt = RedBlackTree()
-        rbt.insert([3, 1, 0, 5])
-        self.assertTrue(rbt.find(0))
-        self.assertTrue(rbt.find(5))
-        self.assertFalse(rbt.find(10))
+        self.tree.insert([3, 1, 0, 5])
+        self.assertTrue(self.tree.find(0))
+        self.assertTrue(self.tree.find(5))
+        self.assertFalse(self.tree.find(10))
 
 
 if __name__ == "__main__":
