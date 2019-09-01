@@ -158,7 +158,19 @@ class Node():
                     if child is not None])
 
     def delete(self, key) -> Node:
-        pass
+        node = self.find(key)
+        if node:
+            if self._get_child_no() == 2:  # node has 2 children
+                successors_key = node._right.min()._key
+                node._right.delete(successors_key)
+                node._key = successors_key
+                return
+            elif self._get_child_no() == 1:
+                return
+            else:  # node doesn't have any child
+                return
+        else:
+            return None
 
     def find(self, key) -> bool:
         if self._key == key:
