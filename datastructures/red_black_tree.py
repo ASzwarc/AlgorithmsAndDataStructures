@@ -158,13 +158,13 @@ class Node():
 
     def find(self, key) -> bool:
         if self._key == key:
-            return True
+            return self
         elif self._key < key and self._right:
             return self._right.find(key)
         elif self._key > key and self._left:
             return self._left.find(key)
         else:
-            return False
+            return None
 
 
 class RedBlackTree():
@@ -247,7 +247,7 @@ class RedBlackTree():
         if self.empty():
             return False
         else:
-            return self._root.find(key)
+            return self._root.find(key) is not None
 
 
 if __name__ == '__main__':
