@@ -172,7 +172,7 @@ class Node():
         else:
             return None
 
-    def find(self, key) -> bool:
+    def find(self, key) -> Node:
         if self._key == key:
             return self
         elif self._key < key and self._right:
@@ -259,7 +259,7 @@ class RedBlackTree():
         else:
             return self._root.find(key)
 
-    def __contains__(self, key):
+    def __contains__(self, key) -> bool:
         if self.empty():
             return False
         else:
