@@ -35,6 +35,14 @@ class TestNode(unittest.TestCase):
         self.assertTrue(node.find(5))
         self.assertFalse(node.find(10))
 
+    def test_get_child_no(self):
+        node = Node(3)
+        self.assertEqual(node._get_child_no(), 0)
+        node._left = Node(1)
+        self.assertEqual(node._get_child_no(), 1)
+        node._right = Node(4)
+        self.assertEqual(node._get_child_no(), 2)
+
 
 class TestRotationAndRecoloring(unittest.TestCase):
     def test_left_left_case(self):

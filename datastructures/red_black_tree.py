@@ -153,6 +153,10 @@ class Node():
             current_node = current_node._left
         return current_node
 
+    def _get_child_no(self):
+        return len([1 for child in [self._right, self._left]
+                    if child is not None])
+
     def delete(self, key) -> Node:
         pass
 
