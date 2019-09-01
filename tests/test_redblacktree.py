@@ -160,6 +160,12 @@ class TestRedBlackTree(unittest.TestCase):
         self.assertTrue(self.tree.find(5))
         self.assertFalse(self.tree.find(10))
 
+    def test_contains(self):
+        self.assertFalse(0 in self.tree)
+        self.tree.insert([4, 5, 0, 2])
+        self.assertFalse(10 in self.tree)
+        self.assertTrue(0 in self.tree)
+
 
 if __name__ == "__main__":
     unittest.main()

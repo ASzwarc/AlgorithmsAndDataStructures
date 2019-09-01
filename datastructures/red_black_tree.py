@@ -237,7 +237,13 @@ class RedBlackTree():
         else:
             return self._root.delete()
 
-    def find(self, key):
+    def find(self, key) -> bool:
+        if self.empty():
+            return False
+        else:
+            return self._root.find(key)
+
+    def __contains__(self, key):
         if self.empty():
             return False
         else:
